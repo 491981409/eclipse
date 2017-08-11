@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://activiti.org/bpmn20" id="review-definitions">
+  <process id="myTaskFlow" name="Parallel Group Review And Approve Activiti Process" isExecutable="true">
+    <extensionElements>
+      <activiti:executionListener event="start" class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
+        <activiti:field name="script">
+          <activiti:string><![CDATA[execution.setVariable('wf_approveCount', 0);
+                       	execution.setVariable('wf_actualPercent', 0);
+                       	execution.setVariable('wf_requiredPercent', wf_requiredApprovePercent);]]></activiti:string>
+        </activiti:field>
+      </activiti:executionListener>
+    </extensionElements>
+    <startEvent id="startevent1" name="Start">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.xxx.activiti.TaskListenerImpl"></activiti:executionListener>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <dataObject id="days" name="days" itemSubjectRef="xsd:string"></dataObject>
+    <userTask id="manage" name="经理审批" activiti:assignee="m">
+      <documentation>简单流程</documentation>
+      <extensionElements>
+        <activiti:executionListener event="create" class="com.xxx.activiti.TaskListenerImpl"></activiti:executionListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow5" sourceRef="manage" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="startevent1" targetRef="manage"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_myTaskFlow">
+    <bpmndi:BPMNPlane bpmnElement="myTaskFlow" id="BPMNPlane_myTaskFlow">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="140.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="560.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="manage" id="BPMNShape_manage">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="193.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="405.0" y="220.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="227.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="175.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="220.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

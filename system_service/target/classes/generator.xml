@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+
+<generatorConfiguration>
+  <!-- <classPathEntry location="C:\ecp\tool\generateMybatis\mybatis-generator-core-1.3.1\ojdbc14.jar" /> -->
+ 
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+ 
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://192.168.20.134:3306/otrs"
+        userId="root"
+        password="123456">
+    </jdbcConnection>
+
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+ 
+    <javaModelGenerator targetPackage="com.xxx.domain.ticket" targetProject="C:\generate">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+
+    <sqlMapGenerator targetPackage="com.xxx.mapper.ticket"  targetProject="C:\generate">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xxx.mapper.ticket"  targetProject="C:\generate">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+
+<table tableName="ticket" domainObjectName="Ticket" >
+</table>
+  </context>
+</generatorConfiguration>

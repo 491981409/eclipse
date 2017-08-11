@@ -1,0 +1,66 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/tx      http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	
+<!-- 生成表结构
+	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">  
+  
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@10.100.6.108:1522/owd01"/>  
+  
+        <property name="jdbcDriver" value="oracle.jdbc.driver.OracleDriver" />  
+  
+        <property name="jdbcUsername" value="acitviti" />  
+  
+        <property name="jdbcPassword" value="admin" />  
+        
+       	 添加oracle 命名空间 默认user 
+        <property name="databaseSchema" value="activitis"/>  
+        
+         <property name="databaseSchemaUpdate" value="true"/>  
+  
+        Databaseconfigurations  
+  
+        <property name="databaseSchemaUpdate" value="true" />  
+  
+        jobexecutor configurations  
+  
+        <property name="jobExecutorActivate" value="false" />  
+  
+      </bean>  --> 
+
+<bean id="activitiDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+    <property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+    <property name="url" value="${jdbc_url}" />
+    <property name="username" value="${jdbc_username}" />
+    <property name="password" value="${jdbc_password}" />
+  </bean>
+
+  <bean id="activitiTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="activitiDataSource" />
+  </bean>
+
+  <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+    <property name="dataSource" ref="activitiDataSource" />
+    <property name="transactionManager" ref="activitiTransactionManager" />
+    <property name="databaseSchemaUpdate" value="true" />
+    <property name="jobExecutorActivate" value="false" />
+  	<property name="deploymentResources" value="classpath*:/diagrams/*.bpmn" />
+  </bean>
+
+  <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+    <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+  </bean>
+  
+  
+  <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+  <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+  <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+  <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+  <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+
+
+</beans>
