@@ -26,13 +26,11 @@ public class MainController {
 		return "core/main";
 	}
 	
-	@SuppressWarnings("unused")
 	@RequestMapping("/toChart")
 	public String toChart(HttpServletRequest request){
 		return "core/charts";
 	}
 	
-	@SuppressWarnings("unused")
 	@RequestMapping("/toWidgets")
 	public String toWidgets(HttpServletRequest request){
 		return "core/widgets";
