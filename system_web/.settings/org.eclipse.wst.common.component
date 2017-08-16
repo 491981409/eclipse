@@ -16,6 +16,9 @@
         <dependent-module archiveName="system-utils-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/system-utils/system-utils">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="system-websocket-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/system-websocket/system-websocket">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/system_web/target/classes"/>
         <property name="context-root" value="system-web"/>
     </wb-module>

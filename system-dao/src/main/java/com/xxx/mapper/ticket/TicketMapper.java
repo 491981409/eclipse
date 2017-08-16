@@ -1,6 +1,7 @@
 package com.xxx.mapper.ticket;
 
 import java.util.List;
+import java.util.Map;
 
 import com.xxx.domain.ticket.Ticket;
 import com.xxx.util.sql.Criteria;
@@ -56,4 +57,6 @@ public interface TicketMapper {
     
     
     List<Ticket> query(Criteria criteria);
+    
+    List<Map<String,Object>> queryTicket(Criteria criteria);
 }

@@ -7,39 +7,73 @@
     <div class="row">
         <div class="col-sm-6 col-lg-3">
             <div class="social-box facebook">
-                <i class="fa fa-facebook"></i>
+                <i class="fa">桌面支持</i>
                 <div class="chart-wrapper">
                     <canvas id="social-box-chart-1" height="90"></canvas>
                 </div>
                 <ul>
                     <li>
-                        <strong>89k</strong>
-                        <span>friends</span>
+                        <strong id="messages">89</strong>
+                        <span>未分配</span>
                     </li>
                     <li>
                         <strong>459</strong>
-                        <span>feeds</span>
+                        <span>处理中</span>
                     </li>
                 </ul>
             </div>
             <!--/.social-box-->
         </div>
+        
+        <script type="text/javascript">
+    
+    
+    $("#messages").click(function(){
+    	
+    	var webSocket = new WebSocket("ws://localhost:7080/sys/websocketTest");
+        webSocket.onerror = function(event) {
+          onError(event)
+        };
+        webSocket.onopen = function(event) {
+        	console.log("与服务器连接成功！");
+          onOpen(event)
+        };
+        webSocket.onmessage = function(event) {
+          onMessage(event)
+        };
+        function onMessage(event) {
+          document.getElementById('messages').innerHTML
+            += '<br />' + event.data;
+        }
+     
+        function onOpen(event) {
+          document.getElementById('messages').innerHTML
+            = 'Connection established';
+        }
+     
+        function onError(event) {
+          alert(event.data+" onError msg");
+        }
+    	webSocket.send('hello');
+    });
+ 	
+  </script>
         <!--/.col-->
 
         <div class="col-sm-6 col-lg-3">
             <div class="social-box twitter">
-                <i class="fa fa-twitter"></i>
+                <i class="fa">系统运维</i>
                 <div class="chart-wrapper">
                     <canvas id="social-box-chart-2" height="90"></canvas>
                 </div>
                 <ul>
                     <li>
-                        <strong>973k</strong>
-                        <span>followers</span>
+                        <strong>973</strong>
+                        <span>未分配</span>
                     </li>
                     <li>
-                        <strong>1.792</strong>
-                        <span>tweets</span>
+                        <strong>15</strong>
+                        <span>处理中</span>
                     </li>
                 </ul>
             </div>
@@ -50,18 +84,18 @@
         <div class="col-sm-6 col-lg-3">
 
             <div class="social-box linkedin">
-                <i class="fa fa-linkedin"></i>
+                <i class="fa">系统支持</i>
                 <div class="chart-wrapper">
                     <canvas id="social-box-chart-3" height="90"></canvas>
                 </div>
                 <ul>
                     <li>
-                        <strong>500+</strong>
-                        <span>contacts</span>
+                        <strong>500</strong>
+                        <span>未分配</span>
                     </li>
                     <li>
                         <strong>292</strong>
-                        <span>feeds</span>
+                        <span>处理中</span>
                     </li>
                 </ul>
             </div>

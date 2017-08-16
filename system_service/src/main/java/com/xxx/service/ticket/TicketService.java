@@ -21,9 +21,12 @@ public class TicketService  {
 		return ticketMapper.query(criteria);
 	}
 	
-	
 	public void insert(Ticket ticket){
 		ticketMapper.insert(ticket);
+	}
+	
+	public List<Map<String,Object>> queryTicket(Map<String,Object> param){
+		return ticketMapper.queryTicket(new Criteria(param));
 		
 	}
 

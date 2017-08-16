@@ -393,6 +393,11 @@
       change_by = #{changeBy,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  
-  
+<select id="queryTicket" parameterType="Object" resultType="Map">
+select t.tn, t.title ,q.`name`,ts.`name`, CONCAT(u.last_name ,u.first_name) as handler_name  , CONCAT(cu.last_name ,cu.first_name) as user_name,t.create_time,t.create_by from ticket t
+left join queue q on t.queue_id = q.id
+left join ticket_state ts on t.ticket_state_id = ts.id
+left join users u on t.user_id = u.id
+left join users cu on t.customer_user_id = cu.login
+</select>  
 </mapper>

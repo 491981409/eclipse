@@ -1,5 +1,7 @@
 $(function(){
   'use strict';
+  
+  
 
   //convert Hex to RGBA
   function convertHex(hex,opacity){

@@ -82,7 +82,7 @@
 	</bean>
 
 	<!-- 封装读取国际化配置文件方法 -->
-	<bean id="frameMessageResource" class=" com.xxx.util.FrameMessageResource">
+	<bean id="frameMessageResource" class=" com.xxx.utils.FrameMessageResource">
 		<property name="messageSource" ref="messageSourceProperties"></property>
 	</bean>
 	
