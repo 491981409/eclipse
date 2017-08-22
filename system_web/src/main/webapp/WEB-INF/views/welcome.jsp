@@ -183,15 +183,7 @@
 
 <script type="text/javascript">
 	$(function(){
-		$("#loginout").click(function(){
-			$.ajax({
-				url:"login/loginout",
-				type:"post",
-				success:function(data){
-					window.location.href = "login";
-				}
-			});
-		});
+		
 	});
 </script>
 </html>

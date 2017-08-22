@@ -1,7 +1,118 @@
 $(function(){
-  'use strict';
+  
+  var webSocket = new WebSocket("ws://localhost:6080/system-web/echo");
+  webSocket.onerror = function(event) {
+    onError(event)
+  };
+  webSocket.onopen = function(event) {
+  	console.log("与服务器连接成功！");
+    onOpen(event)
+  };
+  webSocket.onmessage = function(event) {
+    onMessage(event)
+  };
+
+  function onMessage(event) {
+  	drawing(event.data);
+  }
+
+  function onOpen(event) {
+    console.log("建立连接成功!");
+  }
+
+  function onError(event) {
+    alert(event.data+" onError msg");
+  }	
+  
+  //推送数据
+  function drawing(data){
+	  var data = JSON.parse(data);
+	  $.each(data['undistributed'],function(i,e){
+		  $("#" + getEleId(e.queue_name) +"U").html(e.amount);
+	  });
+	  $.each(data['pendding'],function(i,e){
+		  $("#"+ getEleId(e.queue_name) +"P").html(e.amount);
+	  });
+	  
+	  var tbody =  $("#reportTicketTable");
+	  var tbodyHtml ="";
+	  $.each(data['ticketList'].list,function(i,e){
+		  var html = "<tr>";
+		  var td ="<td><span class=\""+getPriorityStatusIcn(e.ticket_priority_name)+"\">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>";
+		  td += "<td>"+e.tn+"</td>";
+		  td += "<td>"+e.title+"</td>";
+		  td += "<td>"+utils.dateFormat(e.create_time)+"</td>";
+		  td += "<td>"+utils.dateFormat(e.escalation_response_time) +"</td>";
+		  td += "<td>"+utils.dateFormat(e.escalation_update_time)+"</td>";
+		  td += "<td>"+utils.dateFormat(e.escalation_solution_time)+"</td>";
+		  td += "<td>"+e.queue_name+"</td>";
+		  td += "<td>"+e.ticket_status+"</td>";
+		  td += "<td>"+e.user_name+"</td>";	
+		  html += td + "</tr>";
+		  tbodyHtml += html;
+	  });
+	  tbody.html(tbodyHtml);
+  }
+  
+   function getPriorityStatusIcn(priority_name){
+	  var result ="";
+	  if(priority_name.indexOf("normal") != -1){
+		  result ="tag tag-success";
+	  }
+	  return result;
+  }
+  
+   function getEleId(queueName){
+	   var queueId = "";
+	   switch(queueName){
+	   case "桌面支持":
+		   queueId = "window";
+		   break;
+	   case "系统运维":
+		   queueId ="system";
+	   		break;
+	   case "系统支持":
+		   queueId ="support";
+		   break;
+	   case "软件支持":
+		   queueId ="software";
+		   break;
+	   default:
+	   		break;
+	   }
+	   return queueId;
+   }
+  
+  var element = {
+		 data :[{title :"桌面支持",id :"window",color:"facebook"},
+		        {title :"系统运维" ,id:"system",color:"twitter"},
+		        {title :"系统支持",id:"support",color:"linkedin"},
+		        {title :"软件支持",id:"software",color:"google-plus"}]
+  };
+  
+  function initHtml(name,id,index,color){
+	  var html =" <div class=\"col-sm-6 col-lg-3\">" +
+      "<div class=\"social-box "+color+"\">"+
+      "<i class=\"fa\">"+name+"</i>"+
+      "<div class=\"chart-wrapper\">"+
+      "<canvas id=\"social-box-chart-"+index+"\" height=\"90\"></canvas>"+
+      "</div><ul><li><strong id=\""+id+"U\">0</strong>"+
+      "<span>未分配</span></li><li><strong id=\"" +id+"P\""+
+      ">0</strong><span>处理中</span></li>"+
+      "</ul></div></div>";
+	  return html;
+  }
   
   
+  
+  function init(){
+	  var row = $("#queueAmount");
+	  $.each(element.data,function(i,e){
+		  row.append(initHtml(e.title,e.id,i+1,e.color));
+	  });
+  }
+  
+  init();
 
   //convert Hex to RGBA
   function convertHex(hex,opacity){
@@ -14,286 +125,10 @@ $(function(){
     return result;
   }
 
-  //Cards with Charts
-  var labels = ['January','February','March','April','May','June','July'];
-  var data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'My First dataset',
-        backgroundColor: $.brandPrimary,
-        borderColor: 'rgba(255,255,255,.55)',
-        data: [65, 59, 84, 84, 51, 55, 40]
-      },
-    ]
-  };
-  var options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'transparent',
-          zeroLineColor: 'transparent'
-        },
-        ticks: {
-          fontSize: 2,
-          fontColor: 'transparent',
-        }
-
-      }],
-      yAxes: [{
-        display: false,
-        ticks: {
-          display: false,
-          min: Math.min.apply(Math, data.datasets[0].data) - 5,
-          max: Math.max.apply(Math, data.datasets[0].data) + 5,
-        }
-      }],
-    },
-    elements: {
-      line: {
-        borderWidth: 1
-      },
-      point: {
-        radius: 4,
-        hitRadius: 10,
-        hoverRadius: 4,
-      },
-    }
-  };
-  var ctx = $('#card-chart1');
-  var cardChart1 = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-  });
-
-  var data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'My First dataset',
-        backgroundColor: $.brandInfo,
-        borderColor: 'rgba(255,255,255,.55)',
-        data: [1, 18, 9, 17, 34, 22, 11]
-      },
-    ]
-  };
-  var options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'transparent',
-          zeroLineColor: 'transparent'
-        },
-        ticks: {
-          fontSize: 2,
-          fontColor: 'transparent',
-        }
-
-      }],
-      yAxes: [{
-        display: false,
-        ticks: {
-          display: false,
-          min: Math.min.apply(Math, data.datasets[0].data) - 5,
-          max: Math.max.apply(Math, data.datasets[0].data) + 5,
-        }
-      }],
-    },
-    elements: {
-      line: {
-        tension: 0.00001,
-        borderWidth: 1
-      },
-      point: {
-        radius: 4,
-        hitRadius: 10,
-        hoverRadius: 4,
-      },
-    }
-  };
-  var ctx = $('#card-chart2');
-  var cardChart2 = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-  });
-
-  var options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        display: false
-      }],
-      yAxes: [{
-        display: false
-      }],
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-      },
-    }
-  };
-  var data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'My First dataset',
-        backgroundColor: 'rgba(255,255,255,.2)',
-        borderColor: 'rgba(255,255,255,.55)',
-        data: [78, 81, 80, 45, 34, 12, 40]
-      },
-    ]
-  };
-  var ctx = $('#card-chart3');
-  var cardChart3 = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-  });
-
   //Random Numbers
   function random(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);
   }
-
-  var elements = 16;
-  var labels = [];
-  var data = [];
-
-  for (var i = 2000; i <= 2000 + elements; i++) {
-    labels.push(i);
-    data.push(random(40,100));
-  }
-
-  var options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        display: false,
-        barPercentage: 0.6,
-      }],
-      yAxes: [{
-        display: false,
-      }]
-    },
-
-  };
-  var data = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'rgba(255,255,255,.3)',
-        borderColor: 'transparent',
-        data: data
-      },
-    ]
-  };
-  var ctx = $('#card-chart4');
-  var cardChart4 = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: options
-  });
-
-  //Main Chart
-  var elements = 27;
-  var data1 = [];
-  var data2 = [];
-  var data3 = [];
-
-  for (var i = 0; i <= elements; i++) {
-    data1.push(random(50,200));
-    data2.push(random(80,100));
-    data3.push(65);
-  }
-
-  var data = {
-    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'],
-    datasets: [
-      {
-        label: 'My First dataset',
-        backgroundColor: convertHex($.brandInfo,10),
-        borderColor: $.brandInfo,
-        pointHoverBackgroundColor: '#fff',
-        borderWidth: 2,
-        data: data1
-      },
-      {
-        label: 'My Second dataset',
-        backgroundColor: 'transparent',
-        borderColor: $.brandSuccess,
-        pointHoverBackgroundColor: '#fff',
-        borderWidth: 2,
-        data: data2
-      },
-      {
-        label: 'My Third dataset',
-        backgroundColor: 'transparent',
-        borderColor: $.brandDanger,
-        pointHoverBackgroundColor: '#fff',
-        borderWidth: 1,
-        borderDash: [8, 5],
-        data: data3
-      }
-    ]
-  };
-
-  var options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    scales: {
-      xAxes: [{
-        gridLines: {
-          drawOnChartArea: false,
-        }
-      }],
-      yAxes: [{
-        ticks: {
-          beginAtZero: true,
-          maxTicksLimit: 5,
-          stepSize: Math.ceil(250 / 5),
-          max: 250
-        }
-      }]
-    },
-    elements: {
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-  };
-  var ctx = $('#main-chart');
-  var mainChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-  });
 
 
   //Social Box Charts

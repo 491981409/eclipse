@@ -8562,8 +8562,15 @@ header.navbar {
 
 .table-outline {
   border: 1px solid #cfd8dc; }
-  .table-outline td {
-    vertical-align: middle; }
+.table-outline td {
+    vertical-align: middle;
+}
+.table-nowrap{
+	table-layout:fixed;white-space:nowrap;
+}
+.table-nowrap td{
+	overflow:hidden; text-overflow:ellipsis;
+}
 
 .table-align-middle td {
   vertical-align: middle; }
@@ -8939,3 +8946,83 @@ hr.transparent {
     border-right-color: #f86c6b; }
   *[dir="rtl"] .callout-success {
     border-right-color: #4dbd74; }
+    
+    
+    
+    
+    
+.tag {
+    display: inline-block;
+  /* padding: .25em .4em; */
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    vertical-align: baseline
+}
+
+.tag:empty {
+    display: none
+}
+
+a.tag:focus,a.tag:hover {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer
+}
+
+.tag-pill {
+    padding-right: .6em;
+    padding-left: .6em
+}
+
+.tag-default {
+    background-color: #B0bec5
+}
+
+.tag-default[href]:focus,.tag-default[href]:hover {
+    background-color: #93a6af
+}
+
+.tag-primary {
+    background-color: #20a8d8
+}
+
+.tag-primary[href]:focus,.tag-primary[href]:hover {
+    background-color: #1985ac
+}
+
+.tag-success {
+    background-color: #4dbd74;
+}
+
+.tag-success[href]:focus,.tag-success[href]:hover {
+    background-color: #3a9d5d
+}
+
+.tag-info {
+    background-color: #63c2de
+}
+
+.tag-info[href]:focus,.tag-info[href]:hover {
+    background-color: #39b2d5
+}
+
+.tag-warning {
+    background-color: #f8cb00
+}
+
+.tag-warning[href]:focus,.tag-warning[href]:hover {
+    background-color: #c5a100
+}
+
+.tag-danger {
+    background-color: #f86c6b
+}
+
+.tag-danger[href]:focus,.tag-danger[href]:hover {
+    background-color: #f63c3a
+}
+    
+    
+    

@@ -100,5 +100,7 @@
 	
 	<!-- define / to /home -->
 	<mvc:view-controller path="/" view-name="redirect:/login"/>
+	
+	<bean class="com.xxx.utils.listener.ContextUtil" lazy-init="false" />  
   
 </beans>

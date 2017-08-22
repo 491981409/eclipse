@@ -59,4 +59,17 @@ public interface TicketMapper {
     List<Ticket> query(Criteria criteria);
     
     List<Map<String,Object>> queryTicket(Criteria criteria);
+    
+    List<Map<String,Object>> getQueueTicketAmount(Criteria criteria);
+    
+    List<Map<String,Object>> countBar();
+    
+    /**
+     * 统计当前月 每天 每个队列 未关闭工单数
+     * 通过队列和天 进行分组
+     * @return
+     */
+    List<Map<String,Object>> currentMonthTicket();
+    
+    
 }

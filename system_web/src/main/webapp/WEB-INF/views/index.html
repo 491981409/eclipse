@@ -14,7 +14,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="static/core/img/favicon.png">
     <title>报表</title>
     <!-- Icons -->
     <link href="static/core/css/font-awesome.min.css" rel="stylesheet">
@@ -22,17 +22,22 @@
 
     <!-- Main styles for this application -->
     <link href="static/core/css/style.css" rel="stylesheet">
-
+	<style type="text/css">
+		body{
+			overflow-y:hidden !important;
+			overflow-x:hidden !important;
+		}
+		</style>
 </head>
 
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <header class="app-header navbar">
+    <header class="app-header navbar" id="header">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">&#9776;</button>
         <a class="navbar-brand" href="#"></a>
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item">
-                <a class="nav-link navbar-toggler sidebar-toggler" href="#">&#9776;</a>
+                <a class="nav-link navbar-toggler sidebar-toggler" href="#" >&#9776;</a>
             </li>
            <!--  <li class="nav-item px-3">
                 <a class="nav-link" href="#">Dashboard</a>
@@ -56,7 +61,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                    <img src="static/core/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
                     <span class="d-md-down-none">admin</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -64,32 +69,13 @@
                     <div class="dropdown-header text-center">
                         <strong>Account</strong>
                     </div>
-
-                    <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="badge badge-success">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>
-
-                    <div class="dropdown-header text-center">
-                        <strong>Settings</strong>
-                    </div>
-
-                    <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-default">42</span></a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
-                    <div class="divider"></div>
-                    <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
-                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+                    <a class="dropdown-item" href="#" id="logout"><i class="fa fa-lock"></i> Logout</a>
                 </div>
             </li>
             <li class="nav-item d-md-down-none">
-                <a class="nav-link navbar-toggler aside-menu-toggler" href="#">&#9776;</a>
             </li>
-
         </ul>
     </header>
-
     <div class="app-body">
         <div class="sidebar">
             <nav class="sidebar-nav">
@@ -111,6 +97,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="views/core/report"><i class="icon-calculator"></i> 报表 <span class="badge badge-info">NEW</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="views/core/report_chart"><i class="icon-calculator"></i>报表chart <span class="badge badge-info">NEW</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="views/core/report_bar"><i class="icon-calculator"></i>柱形图 <span class="badge badge-info">NEW</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="views/core/widgets"><i class="icon-calculator"></i> 小工具 </a>
@@ -165,6 +157,37 @@
 	 <!-- Plugins and scripts required by all views -->
     <script src="static/core/js/Chart.js"></script>
     <script src="static/core/js/app.js"></script>
+    <script src="static/core/js/utils.js"></script>
+    <script src="static/highcharts/highcharts.js"></script>
+    <script src="static/highcharts/highcharts-3d.js"></script>
+     <script type="text/javascript">
+     	$(function(){
+     		$("#logout").click(function(){
+     			$.ajax({
+     				url:"login/loginout",
+     				type:"post",
+     				success:function(data){
+     					window.location.href = "login";
+     				}
+     			});
+     		});
+     		
+     		$("html").keyup(function(data){
+     			if(data.keyCode == 72){
+     				var flag = $("#header").is(":hidden");
+     				$(".navbar-toggler").trigger("click");
+     				if(flag){
+     					$("#header").show();
+     				}else{
+     					$("#header").hide();
+     				}
+     			}
+     		});
+     		
+     		
+     		
+     	});
+     </script>
 </body>
 
 </html>
