@@ -1,32 +1,35 @@
 $(function(){
   
-  var webSocket = new WebSocket("ws://localhost:6080/system-web/echo");
-  webSocket.onerror = function(event) {
-    onError(event)
-  };
-  webSocket.onopen = function(event) {
-  	console.log("与服务器连接成功！");
-    onOpen(event)
-  };
-  webSocket.onmessage = function(event) {
-    onMessage(event)
-  };
-
-  function onMessage(event) {
-  	drawing(event.data);
+  utils.websocket(function(data){
+	  drawing(data);
+  });
+  
+  function dateMinus(date1,date2){
+	  var diff = (date1 - date2);
+	  
+	  var d =  parseInt(diff / 60 / 60 / 24 >>0);
+	  var h =  parseInt(diff / 60 / 60 % 24);
+	  var m =  parseInt(diff / 60 % 60);
+	  var s =  parseInt(diff % 60);
+	  
+	  var result = '';
+	  if(d > 0){
+		  result += d + "天";
+	  }
+	  if(h > 0){
+		  result += h + "小时";
+	  }
+	  if(m > 0){
+		  result += m + "分钟";
+	  }
+	  if(s > 0){
+		  result += s + "秒";
+	  }
+	  return result;
   }
-
-  function onOpen(event) {
-    console.log("建立连接成功!");
-  }
-
-  function onError(event) {
-    alert(event.data+" onError msg");
-  }	
   
   //推送数据
   function drawing(data){
-	  var data = JSON.parse(data);
 	  $.each(data['undistributed'],function(i,e){
 		  $("#" + getEleId(e.queue_name) +"U").html(e.amount);
 	  });
@@ -37,17 +40,18 @@ $(function(){
 	  var tbody =  $("#reportTicketTable");
 	  var tbodyHtml ="";
 	  $.each(data['ticketList'].list,function(i,e){
+		  var createTime = utils.dateFormat(e.create_time);
 		  var html = "<tr>";
 		  var td ="<td><span class=\""+getPriorityStatusIcn(e.ticket_priority_name)+"\">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>";
 		  td += "<td>"+e.tn+"</td>";
 		  td += "<td>"+e.title+"</td>";
-		  td += "<td>"+utils.dateFormat(e.create_time)+"</td>";
-		  td += "<td>"+utils.dateFormat(e.escalation_response_time) +"</td>";
-		  td += "<td>"+utils.dateFormat(e.escalation_update_time)+"</td>";
-		  td += "<td>"+utils.dateFormat(e.escalation_solution_time)+"</td>";
+		  td += "<td>"+createTime+"</td>";
+		  td += "<td>"+dateMinus(e.escalation_response_time_unix , e.create_time_unix)  +"</td>";
+		  td += "<td>"+dateMinus(e.escalation_update_time_unix , e.create_time_unix)  +"</td>";
+		  td += "<td>"+dateMinus(e.escalation_solution_time_unix , e.create_time_unix)  +"</td>";
 		  td += "<td>"+e.queue_name+"</td>";
 		  td += "<td>"+e.ticket_status+"</td>";
-		  td += "<td>"+e.user_name+"</td>";	
+		  td += "<td>"+e.user_name+"</td>";
 		  html += td + "</tr>";
 		  tbodyHtml += html;
 	  });

@@ -108,6 +108,8 @@ xmlns:util="http://www.springframework.org/schema/util"
 	
 	<!-- 使用annotation定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" /> 
+	
+	
 
 
 </beans>

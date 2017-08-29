@@ -24,6 +24,12 @@
   		<artifactId>system-utils</artifactId>
   		<version>0.0.1</version>
   	</dependency>
+  	
+  	<dependency>
+  		<groupId>system</groupId>
+  		<artifactId>system-websocket</artifactId>
+  		<version>0.0.1</version>
+  	</dependency>
   
     <dependency>
 	    <groupId>org.activiti</groupId>

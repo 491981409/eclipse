@@ -1,6 +1,28 @@
 /**
  * 公用js
  */
+
+Date.prototype.format = function(fmt) { 
+     var o = { 
+        "M+" : this.getMonth()+1,                 //月份 
+        "d+" : this.getDate(),                    //日 
+        "h+" : this.getHours(),                   //小时 
+        "m+" : this.getMinutes(),                 //分 
+        "s+" : this.getSeconds(),                 //秒 
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度 
+        "S"  : this.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+}        
+
 var utils = {
 	/**
 	 * bootstrap查询参数封装
@@ -72,6 +94,11 @@ var utils = {
 			return y+'-'+m+'-'+d+' '+h+':'+mm+':'+s;
 		}
 	},
+	unixFormat:function(unix ,pattern){
+		var newDate = new Date();
+		newDate.setTime(parseInt(unix) * 1000);
+		return newDate.format("yyyy-MM-dd hh:mm:ss");
+	},
 	/**
 	 *  限制输入数字和. 
 	 * 
@@ -87,6 +114,32 @@ var utils = {
 		var date = new Date(); 
 		var day = new Date(date.getFullYear(),date.getMonth(),"0");
 		return day.getDate();
+	},websocket:function(fun){
+		
+		  var webSocket = new WebSocket("ws://localhost:6080/system-web/echo");
+		  webSocket.onerror = function(event) {
+		    onError(event)
+		  };
+		  webSocket.onopen = function(event) {
+		  	console.log("与服务器连接成功！");
+		    onOpen(event)
+		  };
+		  webSocket.onmessage = function(event) {
+		    onMessage(event)
+		  };
+
+		  function onMessage(event) {
+			  var data = JSON.parse(event.data);
+			  fun(data);
+		  }
+
+		  function onOpen(event) {
+		    console.log("建立连接成功!");
+		  }
+
+		  function onError(event) {
+		    alert(event.data+" onError msg");
+		  }	
 	}
 }
 

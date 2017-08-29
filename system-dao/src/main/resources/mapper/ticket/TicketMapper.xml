@@ -406,9 +406,10 @@ SELECT
     t.create_time as create_time,
     tp.`name` as ticket_priority_name,
 	t.escalation_time AS escalation_time,
-    t.escalation_update_time as escalation_update_time,
-    t.escalation_solution_time as escalation_solution_time,
-    t.escalation_response_time as escalation_response_time,
+	t.create_time_unix as create_time_unix,
+    t.escalation_update_time as escalation_update_time_unix,
+    t.escalation_solution_time as escalation_solution_time_unix,
+    t.escalation_response_time as escalation_response_time_unix,
     q.`name` as queue_name
 FROM
 	ticket t
@@ -469,6 +470,7 @@ GROUP BY
 <select id="currentMonthTicket" resultType="Map">
 	SELECT
 	DATE_FORMAT(t.create_time,'%Y-%m-%d') as create_time,
+	DATE_FORMAT(t.create_time,'%d') as create_day,
   (select q.name from queue q where q.id =t.queue_id) as queue_name,
   t.queue_id,
   COUNT(1) as ticket_count

@@ -43,6 +43,7 @@ public class TaskJobService {
 		result.put("undistributed", ticketService.getTicketUndistributed());
 		result.put("ticketList", ticketJobService.queryTicketList());
 		result.put("bar", ticketService.countBar());
+		result.put("queueDay", ticketService.queueDayTicketCount());
 		String json = new Gson().toJson(result);
 		return json;
 	}

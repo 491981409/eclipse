@@ -1,30 +1,8 @@
 $(function () {
 
-	  var webSocket = new WebSocket("ws://localhost:6080/system-web/echo");
-	  webSocket.onerror = function(event) {
-	    onError(event)
-	  };
-	  webSocket.onopen = function(event) {
-	  	console.log("与服务器连接成功！");
-	    onOpen(event)
-	  };
-	  webSocket.onmessage = function(event) {
-	    onMessage(event)
-	  };
-
-	  function onMessage(event) {
-		  var data = JSON.parse(event.data);
-	  	  drawing(data.bar);
-	  }
-
-	  function onOpen(event) {
-	    console.log("建立连接成功!");
-	  }
-
-	  function onError(event) {
-	    alert(event.data+" onError msg");
-	  }	
-	
+	 utils.websocket(function(data){
+		 drawing(data.bar);
+	 });
 	
 	var categories = [];
 	var pending = [];

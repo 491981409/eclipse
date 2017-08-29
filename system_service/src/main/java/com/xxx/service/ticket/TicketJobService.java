@@ -15,7 +15,7 @@ public class TicketJobService {
 	private TicketService ticketService;
 	
 	public static volatile int pageNum = 1;
-	public static volatile int total =10;
+	public static volatile int total = 6;
 	public static volatile int records;
 	
 	

@@ -10,7 +10,7 @@
   <context id="DB2Tables" targetRuntime="MyBatis3">
  
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://192.168.20.134:3306/otrs"
+        connectionURL="jdbc:mysql://192.168.20.134:3306/wxi"
         userId="root"
         password="123456">
     </jdbcConnection>
@@ -20,23 +20,36 @@
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
  
-    <javaModelGenerator targetPackage="com.xxx.domain.ticket" targetProject="C:\generate">
+    <javaModelGenerator targetPackage="com.xxx.wxi.domain.base" targetProject="C:\generate">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
 
 
-    <sqlMapGenerator targetPackage="com.xxx.mapper.ticket"  targetProject="C:\generate">
+    <sqlMapGenerator targetPackage="com.xxx.wxi.mapper.base"  targetProject="C:\generate">
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xxx.mapper.ticket"  targetProject="C:\generate">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.xxx.wxi.mapper.base"  targetProject="C:\generate">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
 
-<table tableName="ticket" domainObjectName="Ticket" >
+<table tableName="dtwx_agent_cfg" domainObjectName="AgentCfg"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
 </table>
+<table tableName="dtwx_agent" domainObjectName="Agent" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+</table>
+<table tableName="dtwx_account" domainObjectName="Account" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+</table>
+<table tableName="dtwx_app_config" domainObjectName="AppConfig" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+</table>
+<table tableName="dtwx_content" domainObjectName="Content" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+</table>
+
+
+
+
+
   </context>
 </generatorConfiguration>

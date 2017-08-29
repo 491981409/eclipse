@@ -4,20 +4,68 @@ $(function(){
 	  function random(min,max) {
 	    return Math.floor(Math.random()*(max-min+1)+min);
 	  }
-	
+	  
 	//Main Chart
 	  var elements = utils.getCurrentMonthMaxDay();
+	  
+	  var map =new Map();
+	  
 	  var data1 = [];
 	  var data2 = [];
 	  var data3 = [];
-	  var labels =[];
-
-	  for (var i = 1; i <= elements; i++) {
-		labels.push(i);
-	    data1.push(random(50,150));
-	    data2.push(random(80,100));
-	    data3.push(0);
+	 
+	  
+	  utils.websocket(function(data){
+		  map =new Map();
+		  var datasets = [];
+		  var labels =[];
+		  
+		  for (var i = 1; i <= elements; i++) {
+				labels.push(i);
+		  }
+		  $.each(data.queueDay,function(k,c){
+			  var everyDay = [];
+			  for (var i = 1; i <= elements; i++) {
+				  var key = i < 10 ?  '0'+ i : i ; 
+				  if(c[key] != undefined ){
+					  everyDay.push(c[key]);
+				  }else{
+					  everyDay.push(0);
+				  }
+			  }
+			  map.set(k,everyDay);
+		  });
+		  randomColorIndex = 0;
+		  map.forEach(function(value ,key ,map){
+			  var option= {};
+			  option.label =  key;
+			  var color = getRandomColor();
+			  option.backgroundColor = convertHex(color,10);
+			  option.borderColor = color;
+			  option.pointHoverBackgroundColor = '#fff';
+			  option.borderWidth = 2;
+			  option.data= value;
+			  datasets.push(option);
+		  });
+		  var ctx = $('#main-chart');
+		    var mainChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {labels: labels,datasets: datasets},
+			    options: options
+		    });
+	   });
+	  
+	  var randomColorIndex = 0;
+	  var brand = [$.brandSuccess,$.brandInfo,$.brandWarning,$.brandDanger];
+	  function getRandomColor(){
+		  if(randomColorIndex > brand.length){
+			  randomColorIndex = 0;
+		  }
+		  var color = brand[randomColorIndex];
+		  randomColorIndex ++;
+		  return color;
 	  }
+
 	
 	 //convert Hex to RGBA
 	  function convertHex(hex,opacity){
@@ -29,43 +77,10 @@ $(function(){
 	    var result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
 	    return result;
 	  }
-	
-	 var data = {
-			    labels: labels,
-			    datasets: [
-			      {
-			        label: 'My First dataset',
-			        backgroundColor: convertHex($.brandInfo,10),
-			        borderColor: $.brandInfo,
-			        pointHoverBackgroundColor: '#fff',
-			        borderWidth: 2,
-			        data: data1
-			      },
-			      {
-			        label: 'My Second dataset',
-			        backgroundColor: 'transparent',
-			        borderColor: $.brandSuccess,
-			        pointHoverBackgroundColor: '#fff',
-			        borderWidth: 2,
-			        data: data2
-			      },
-			      {
-			        label: 'My Third dataset',
-			        backgroundColor: 'transparent',
-			        borderColor: $.brandDanger,
-			        pointHoverBackgroundColor: '#fff',
-			        borderWidth: 1,
-			        borderDash: [8, 5],
-			        data: data3
-			      }
-			    ]
-			  };
-	 
+	  
 	 var options = {
+			    responsive: true,
 			    maintainAspectRatio: false,
-			    legend: {
-			      display: false
-			    },
 			    scales: {
 			      xAxes: [{
 			        gridLines: {
@@ -76,8 +91,8 @@ $(function(){
 			        ticks: {
 			          beginAtZero: true,
 			          maxTicksLimit: 5,
-			          stepSize: Math.ceil(150 / 15),
-			          max: 150
+			          stepSize: Math.ceil(50 / 10),
+			          max: 50
 			        }
 			      }]
 			    },
@@ -88,18 +103,7 @@ $(function(){
 			        hoverRadius: 4,
 			        hoverBorderWidth: 3,
 			      }
-			    },
+			    }
 			  };
-	
-	
-	var ctx = $('#main-chart');
-	  var mainChart = new Chart(ctx, {
-	    type: 'line',
-	    data: data,
-	    options: options,
-	    scaleShowLabels : true,
-	  });
-
-	
 	
 });

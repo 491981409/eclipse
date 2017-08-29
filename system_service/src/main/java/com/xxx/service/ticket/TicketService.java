@@ -11,7 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.xxx.domain.ticket.Ticket;
-import com.xxx.mapper.ticket.TicketMapper;
+import com.xxx.otrs.mapper.ticket.TicketMapper;
 import com.xxx.util.sql.Criteria;
 
 @Service
@@ -103,14 +103,15 @@ public class TicketService  {
 		Map<String,Object> resultMap = new HashMap<>();
 		for (Map<String, Object> map : queueList) {
 			String queueId =  map.get("queue_id").toString();
-			String date = map.get("create_time").toString();
 			String ticketCount = map.get("ticket_count").toString();
+			String day = map.get("create_day").toString();
+			queueId = map.get("queue_name").toString();
 			if(resultMap.get(queueId)!= null){
 				Map<String,Object> queueMap = (Map<String, Object>) resultMap.get(queueId);
-				queueMap.put(date, ticketCount);
+				queueMap.put(day, ticketCount);
 			}else{
 				Map<String,Object> queueMap = new HashMap<>();
-				queueMap.put(date, ticketCount);
+				queueMap.put(day, ticketCount);
 				resultMap.put(queueId, queueMap);
 			}
 		}
