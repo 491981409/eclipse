@@ -1,4 +1,4 @@
-package com.xxx.util;
+package com.xxx.utils;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -9,7 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.xxx.domain.auth.User;
+import com.xxx.otrs.domain.auth.User;
 
 public class ShiroRealm extends  AuthorizingRealm{
 

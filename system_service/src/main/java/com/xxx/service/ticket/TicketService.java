@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
-import com.xxx.domain.ticket.Ticket;
+import com.xxx.otrs.domain.ticket.Ticket;
+import com.xxx.otrs.domain.ticket.TicketFlag;
 import com.xxx.otrs.mapper.ticket.TicketMapper;
 import com.xxx.util.sql.Criteria;
 
 @Service
-public class TicketService  {
+public class TicketService {
 	
 	@Autowired
 	private TicketMapper ticketMapper;
@@ -55,6 +56,8 @@ public class TicketService  {
 		criteria.put("status", "undistributed");
 		return ticketMapper.getQueueTicketAmount(criteria);
 	}
+	
+	
 	/**
 	 * 获得每个队列 处理中状态总数
 	 * @return
@@ -117,6 +120,9 @@ public class TicketService  {
 		}
 		return resultMap;
 	}
+	
+	
+	
 	
 	
 	

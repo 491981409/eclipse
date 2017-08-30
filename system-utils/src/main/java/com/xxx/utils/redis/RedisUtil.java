@@ -11,10 +11,10 @@ public class RedisUtil {
 	
 		@Autowired  
 	    private StringRedisTemplate redisTemplate;//
-	      
-	          
-	    public void put(String key, String value) {  
-	        if (key==null || "".equals(key)) {  
+		
+		
+	    public void put(String key, String value) {
+	        if (key==null || "".equals(key)) {
 	            return;  
 	        }  
 	        redisTemplate.opsForHash().put(key, key, value);  
@@ -22,18 +22,17 @@ public class RedisUtil {
 	    }  
 	      
 	    public void put(String key, Object value) {  
-	        if (key==null || "".equals(key)) {  
+	        if (key==null || "".equals(key)) {
 	            return;  
-	        }  
+	        }
 	        redisTemplate.opsForHash().put(key, key, new Gson().toJson(value));  
-	          
 	    }  
 	  
 	      
 	    public <T> T get(String key, Class<T> className) {  
 	        Object obj = redisTemplate.opsForHash().get(key, key);  
-	        if(obj == null){  
-	            return null;  
+	        if(obj == null){
+	            return null;
 	        }  
 	        return new Gson().fromJson(""+obj, className);  
 	    }  

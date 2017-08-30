@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.xxx.domain.ticket.Ticket;
+import com.xxx.otrs.domain.ticket.Ticket;
 import com.xxx.service.ticket.TicketService;
 import com.xxx.utils.RequestParamUtil;
 

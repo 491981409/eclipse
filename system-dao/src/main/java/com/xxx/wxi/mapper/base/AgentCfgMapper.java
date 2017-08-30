@@ -1,5 +1,8 @@
 package com.xxx.wxi.mapper.base;
 
+import java.util.List;
+
+import com.xxx.util.sql.Criteria;
 import com.xxx.wxi.domain.base.AgentCfg;
 
 public interface AgentCfgMapper {
@@ -50,4 +53,6 @@ public interface AgentCfgMapper {
      * @mbggenerated Tue Aug 29 09:39:59 CST 2017
      */
     int updateByPrimaryKey(AgentCfg record);
+    
+    List<AgentCfg> query(Criteria criteria);
 }

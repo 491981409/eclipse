@@ -6,10 +6,10 @@
 
 	<description>Shiro</description>
 
-	<bean id="shiroRealm" class="com.xxx.util.ShiroRealm" depends-on="">
+	<bean id="shiroRealm" class="com.xxx.utils.ShiroRealm" depends-on="">
 	</bean>
 	
-	<bean id="groupTypeFormAuthenticationFilter" class="com.xxx.util.ShiroAuthenticationFilter" />
+	<bean id="groupTypeFormAuthenticationFilter" class="com.xxx.utils.ShiroAuthenticationFilter" />
 	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroRealm" />
