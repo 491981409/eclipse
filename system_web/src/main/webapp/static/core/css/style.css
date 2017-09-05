@@ -7366,8 +7366,10 @@ app-root {
 .app-header {
   flex: 0 0 55px; }
 
+/**zfx 注释**/
 .app-footer {
-  flex: 0 0 50px; }
+ /** flex: 0 0 50px;**/
+ }
 
 .app-body {
   display: flex;
@@ -8992,6 +8994,14 @@ a.tag:focus,a.tag:hover {
     background-color: #1985ac
 }
 
+.tag-secondary {
+    background-color: #83bfc8
+}
+
+.tag-secondary[href]:focus,.tag-secondary[href]:hover {
+    background-color: #83bfc8
+}
+
 .tag-success {
     background-color: #4dbd74;
 }
@@ -9023,6 +9033,34 @@ a.tag:focus,a.tag:hover {
 .tag-danger[href]:focus,.tag-danger[href]:hover {
     background-color: #f63c3a
 }
+
+
+.tag-3 {
+    background-color: #B0bec5
+}
+
+.tag-3[href]:focus,.tag-3[href]:hover {
+    background-color: #93a6af
+}
+
+.tag-4 {
+    background-color: #ffaaaa
+}
+.tag-4[href]:focus,.tag-4[href]:hover {
+    background-color: #ffaaaa
+}
+
+.tag-5 {
+    background-color: #ff505e
+}
+.tag-5[href]:focus,.tag-5[href]:hover {
+    background-color: #ff505e
+}
+
+
+
+
+
     
     
     

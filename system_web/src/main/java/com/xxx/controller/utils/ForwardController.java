@@ -16,4 +16,5 @@ public class ForwardController {
 		String url = uri.substring(uri.indexOf("views")+5,uri.length());
 		return url;
 	}
+	
 }

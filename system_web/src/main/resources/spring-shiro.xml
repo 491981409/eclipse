@@ -29,6 +29,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/**/static/** = anon
+				/ticketOtrs/** = anon
 				/** = authc <!-- authc -->
 			</value>
 		</property>

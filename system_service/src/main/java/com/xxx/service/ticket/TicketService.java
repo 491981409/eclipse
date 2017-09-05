@@ -34,6 +34,12 @@ public class TicketService {
 		return ticketMapper.queryTicket(new Criteria(param));
 	}
 	
+	public PageInfo<Map<String,Object>> getTicketList(Map<String,Object> param){
+		PageHelper.startPage(param);
+		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
+		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);
+		return pageInfo;
+	}
 	/**
 	 * 查询处理中状态的工单
 	 * @param param
@@ -78,19 +84,21 @@ public class TicketService {
 		for (Map<String, Object> map : barList) {
 			String userId =  map.get("user_id").toString();
 			String userName = map.get("user_name").toString();
-			String statusName =  map.get("state_name").toString();
-			String statusCount = map.get("state_count").toString();
+			String openCount = map.get("open_count").toString();
+			String upgradeCount = map.get("upgrade_count").toString();
 			BarModel barModel = resultMap.get(userId);
 			if(barModel == null){
 				BarModel bar = new BarModel();
-				bar.userName = userName;
+				bar.setUserName(userName);
+				bar.setOpen(Integer.parseInt(openCount));
+				bar.setUpgrade(Integer.parseInt(upgradeCount));
 				barModel = bar;
 			}
-			if("open".equals(statusName)){//处理中
+		/*	if("open".equals(statusName)){//处理中
 				barModel.setOpen(barModel.open + Integer.parseInt(statusCount));
-			}else{//待处理
+			}else{//提醒挂起
 				barModel.setPending(barModel.pending + Integer.parseInt(statusCount));
-			}
+			}*/
 			resultMap.put(userId, barModel);
 		}
 		return resultMap;
@@ -122,15 +130,11 @@ public class TicketService {
 	}
 	
 	
-	
-	
-	
-	
 	public class BarModel{
 		
 		private String userName;
 		
-		private int pending; //待处理
+		private int upgrade; //已升级
 		
 		private int open; //处理中
 
@@ -142,13 +146,6 @@ public class TicketService {
 			this.userName = userName;
 		}
 
-		public int getPending() {
-			return pending;
-		}
-
-		public void setPending(int pending) {
-			this.pending = pending;
-		}
 
 		public int getOpen() {
 			return open;
@@ -157,6 +154,15 @@ public class TicketService {
 		public void setOpen(int open) {
 			this.open = open;
 		}
+		
+		public int getUpgrade() {
+			return upgrade;
+		}
+
+		public void setUpgrade(int upgrade) {
+			this.upgrade = upgrade;
+		}
+
 
 	}
 

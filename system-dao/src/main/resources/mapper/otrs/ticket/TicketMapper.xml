@@ -410,7 +410,12 @@ SELECT
     t.escalation_update_time as escalation_update_time_unix,
     t.escalation_solution_time as escalation_solution_time_unix,
     t.escalation_response_time as escalation_response_time_unix,
-    q.`name` as queue_name
+    UNIX_TIMESTAMP(now()) as system_time,
+    case when NOW() > FROM_UNIXTIME(t.escalation_response_time)
+               or NOW() > FROM_UNIXTIME(t.escalation_update_time)
+               or NOW() > FROM_UNIXTIME(t.escalation_solution_time) THEN 1 END as upgrade_count,
+    q.`name` as queue_name,
+    tly.`name` as lock_name
 FROM
 	ticket t
 LEFT JOIN queue q ON t.queue_id = q.id
@@ -419,10 +424,14 @@ LEFT JOIN ticket_state_type tst ON tst.id = ts.type_id
 LEFT JOIN users u ON t.user_id = u.id
 LEFT JOIN users cu ON t.customer_user_id = cu.login
 left join ticket_priority tp on tp.id = t.ticket_priority_id
+left join ticket_lock_type tly on tly.id = t.ticket_lock_id
 <where>
 	1=1 
 	<if test="condition.status =='pending' "><!-- 待处理 -->
 		and tst.`name` != 'closed'
+	</if>
+	<if test="condition.userLogin !=null">
+		and u.login = #{condition.userLogin}
 	</if>
 </where>
 </select>
@@ -438,10 +447,10 @@ inner join ticket_state_type tst on tst.id = ts.type_id
 <where>
 	1=1 
 	<if test="condition.status == 'undistributed' "> <!-- 未分配 -->
-	and t.user_id is null
+	and t.user_id ='1'  <!-- 一代表管理员 -->
 	</if>
 	<if test="condition.status == 'pendding' "><!-- 处理中 -->
-		and tst.name !='closed'
+		and tst.name ='open'
 	</if>
 </where>
 group by t.queue_id
@@ -450,17 +459,20 @@ group by t.queue_id
 <!-- 统计柱形数据 -->
 <select id="countBar" resultType="Map">
 SELECT
-	CONCAT(u.last_name, u.first_name) as user_name,
+  CONCAT(u.last_name, u.first_name) as user_name,
 	u.id as user_id,
-	count(tst.`name`) as state_count,
-	tst.`name` as state_name
+	count(tst.`name`) as open_count,
+	tst.`name` as state_name,
+  COUNT(case when NOW() > FROM_UNIXTIME(t.escalation_response_time) 
+               or NOW() > FROM_UNIXTIME(t.escalation_update_time) 
+               or NOW() > FROM_UNIXTIME(t.escalation_solution_time) THEN 1 END) as upgrade_count
 FROM
 	ticket t
 LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
 LEFT JOIN ticket_state_type tst ON ts.type_id = tst.id
 LEFT JOIN users u ON u.id = t.user_id
 WHERE
-	tst.`name` != 'closed'
+	tst.`name` = 'open'
 GROUP BY
 	t.user_id,
 	tst.`name`

@@ -25,13 +25,12 @@ public class CallOtrs {
 	@Autowired
 	private RedisUtil redisUtil;
 	
-
 	public static String OTRS_URL = "";
 
 	public CallOtrs() {
 		try {
 			CachFactory cach = CachFactory.getInstance();
-			String prefix = cach.getConfig("base", "otrsUrlInf");
+			String prefix = cach.getConfig("base", "otrsUrlBase");
 		    OTRS_URL = prefix + cach.getConfig("base", "otrsUrlInf");;
 		} catch (Exception e) {
 			log.info("============= orts_url init error:" + OTRS_URL +"==============");
@@ -39,26 +38,8 @@ public class CallOtrs {
 		}
 	}
 
-	public static void main(String[] args) {
-		CallOtrs callOtrs = new CallOtrs();
-		Map<String, String> jsStr = null;
-		try {
-			OTRS_URL = "http://172.18.3.202/otrs/weixin.pl";
-
-			//String param = "{\"imageUrl\":\""
-					//+ MultiLanguageUtil.getConfigSysString(ConfigUtil.getConfig("base", "language"), "TICKET_TEST")
-					//+ "\"," + "\"formId\":\"\"," + "\"customerUserId\":\"chenJserver\"" + "}";
-			 Map<String,Object> param = new HashMap<String,Object>();
-			 param.put("userLogin","13316532095");
-			 param.put("customerUserLogin","18033073739");
-			jsStr = callOtrs.exeCallOtrs("SearchTicket", new Gson().toJson(param).toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public Map<String, String> exeCallOtrs(String subFun, String param) throws IOException {
-		log.info("=================excCallOtrs:"+subFun+" param:" +param+"===================");
+	public Result exeCallOtrs(String subFun, String param) throws IOException {
+		long beginTime = System.currentTimeMillis();
 		Map<String, String> rsltMap = new HashMap<String, String>();
 
 		HttpClient httpClient = new HttpClient();
@@ -72,24 +53,19 @@ public class CallOtrs {
 		postMethod.addParameter("subFun", subFun);
 		postMethod.addParameter("param", param);
 
-		String errorInfo = "";
+		Result result = new Result();
 
 		int statusCode = httpClient.executeMethod(postMethod);
+		result.setCode(String.valueOf(statusCode));
 		if (statusCode != 200) {
-			errorInfo = "[" + postMethod.getStatusLine().toString() + "]";
+			result.setFailure();
+			result.setMsg("[" + postMethod.getStatusLine().toString() + "]");
 		}
-
-		byte[] responseBody = postMethod.getResponseBody();
-
-		String returnInfo = errorInfo + new String(responseBody, "utf-8");
-
-		String httpStatus = String.valueOf(statusCode);
-
-		rsltMap.put("content", returnInfo);
-		rsltMap.put("status", httpStatus);
-
+		result.setResult(new String(postMethod.getResponseBody(), "utf-8"));
 		postMethod.releaseConnection();
-		return rsltMap;
+		long endTime = System.currentTimeMillis();
+		System.out.println("+++++++++++ otrs search time : "+(endTime - beginTime) +"+++++++++++++++");
+		return result;
 	}
 
 	public String getFAQList(String userId, String keyWords) throws HttpException, IOException {

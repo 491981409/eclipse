@@ -5,7 +5,7 @@ $(function () {
 	 });
 	
 	var categories = [];
-	var pending = [];
+	var upgrade = [];
 	var open = [];
 	
 	$.ajax({
@@ -15,7 +15,7 @@ $(function () {
 		success:function(data){
 			$.each(data,function(i,e){
 				categories.push(e.userName);
-				pending.push(e.pending);
+				upgrade.push(e.upgrade);
 				open.push(e.open);
 			});
 		}
@@ -24,16 +24,16 @@ $(function () {
 	
 	function drawing(data){
 		var categories = [];
-		var pending = [];
+		var upgrade = [];
 		var open = [];
 		$.each(data,function(i,e){
 			categories.push(e.userName);
-			pending.push(e.pending);
+			upgrade.push(e.upgrade);
 			open.push(e.open);
 		});
 		chart.xAxis[0].setCategories(categories);
 		chart.series[0].setData(open);
-		chart.series[1].setData(pending);
+		chart.series[1].setData(upgrade);
 	}
 	
 	
@@ -42,10 +42,10 @@ $(function () {
             type: 'column',
             options3d: {
                 enabled: true,
-                alpha: 15,
-                beta: 15,
-                viewDistance: 25,
-                depth: 40
+                alpha: 0,
+                beta: 0,
+                viewDistance: 20,
+                depth: 45
             },
             marginTop: 80,
             marginRight: 40
@@ -78,12 +78,12 @@ $(function () {
             }
         },
         series: [{
-            name: '未处理',
+            name: '处理中',
             data: open,
             stack: 'status'
         }, {
-            name: '待处理',
-            data: pending,
+            name: '已升级',
+            data: upgrade,
             stack: 'status'
         }]
     });
