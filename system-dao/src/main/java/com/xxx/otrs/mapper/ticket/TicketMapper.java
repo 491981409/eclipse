@@ -58,11 +58,32 @@ public interface TicketMapper {
     
     List<Ticket> query(Criteria criteria);
     
+    
+    /**
+     * 查询工单
+     * @param criteria
+     * @return
+     */
     List<Map<String,Object>> queryTicket(Criteria criteria);
     
+    
+    
+    /**
+     * 获得每个队列工单数
+     * @param criteria
+     * @return
+     */
     List<Map<String,Object>> getQueueTicketAmount(Criteria criteria);
     
+    
+    
+    /**
+     * 统计柱形图数据
+     * @return
+     */
     List<Map<String,Object>> countBar();
+    
+    
     
     /**
      * 统计当前月 每天 每个队列 未关闭工单数
@@ -70,6 +91,28 @@ public interface TicketMapper {
      * @return
      */
     List<Map<String,Object>> currentMonthTicket();
+    
+    /**
+     * 获得每天创建的工单总数
+     * @return
+     */
+    List<Map<String,Object>> findEveryDayCreateSum();
+    
+    
+    /**
+     * 获得每天关闭的工单总数
+     * @return
+     */
+    List<Map<String,Object>> findEveryDayCloseSum();
+    
+    
+    /**
+     * 获得每天升级的工单总数
+     * @return
+     */
+    List<Map<String,Object>> findEveryDayGradeSum();
+    
+    
     
     
 }

@@ -1,19 +1,21 @@
 package com.xxx.service.ticket;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import com.xxx.otrs.domain.ticket.Ticket;
-import com.xxx.otrs.domain.ticket.TicketFlag;
 import com.xxx.otrs.mapper.ticket.TicketMapper;
 import com.xxx.util.sql.Criteria;
+import com.xxx.utils.date.DateStyle;
+import com.xxx.utils.date.DateUtil;
 
 @Service
 public class TicketService {
@@ -104,6 +106,55 @@ public class TicketService {
 		return resultMap;
 	}
 	
+	/**
+	 * 统计每天线形数据
+	 * @return 
+	 */
+	public Map<String,Object> countLine(){
+		Map<String,String> close =  convert(ticketMapper.findEveryDayCloseSum());
+		
+		Map<String,String> create = convert(ticketMapper.findEveryDayCreateSum());
+		
+		Map<String,String> grade = convert(ticketMapper.findEveryDayGradeSum());
+		
+		String [] closeList = new String[28];
+		String [] createList = new String[28];
+		String [] gradeList = new String[28];
+		String [] lable = new String[28];
+		Date date = new Date();
+		int index = 27;
+		for (int i= 0 ;i > -28 ;i--) {
+			String day = DateUtil.DateToString(DateUtil.addDay(date, i), DateStyle.YYYY_MM_DD);
+			lable[index] = DateUtil.DateToString(DateUtil.addDay(date, i), DateStyle.MM_DD);
+			convertArray(closeList,close,day,index);
+			convertArray(createList,create,day,index);
+			convertArray(gradeList,grade,day,index);
+			index --;
+		}
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("lable", lable);
+		result.put("close",closeList);
+		result.put("create",createList);
+		result.put("grade",gradeList);
+		return result;
+	}
+	
+	
+	private void convertArray(String [] result,Map<String,String> resource,String day, int index){
+		String val = resource.get(day);
+		if(StringUtils.isEmpty(val)){
+			val = "0";
+		}
+		result[index] = val;
+	}
+	
+	private Map<String,String> convert(final List<Map<String,Object>> param){
+		Map<String,String> result = new HashMap<String,String>();
+		for (Map<String, Object> map : param) {
+			result.put(map.get("day").toString(), map.get("day_count").toString());
+		}
+		return result;
+	}
 	
 	/**
 	 *  每个队列每天工单总数

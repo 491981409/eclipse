@@ -5,6 +5,9 @@ $(function(){
   });
   
   function dateMinus(date1,date2){
+	  if(data2 == 0){
+		  return "0";
+	  }
 	  var diff = (date1 - date2);
 	  
 	  var result = '';
@@ -55,13 +58,13 @@ $(function(){
 			  html ="<tr style ='color: red;'>";
 		  }
 		  var td ="<td class=\"text-center\"><span class=\""+getPriorityStatusIcn(e.ticket_priority_name)+"\">&nbsp;&nbsp;&nbsp;&nbsp;</span></td>";
-		  td += "<td>"+e.tn+"</td>";
+		 // td += "<td>"+e.tn+"</td>";
 		  td += "<td>"+e.title+"</td>";
 		  td += "<td>"+dateMinus(e.system_time , e.escalation_response_time_unix)  +"</td>";
 		  td += "<td>"+dateMinus(e.system_time , e.escalation_update_time_unix)  +"</td>";
 		  td += "<td>"+dateMinus(e.system_time , e.escalation_solution_time_unix)  +"</td>";
 		  td += "<td>"+e.queue_name+"</td>";
-		  td += "<td>"+getTicketStatus(e.ticket_status)+"</td>";
+		 // td += "<td>"+getTicketStatus(e.ticket_status)+"</td>";
 		  td += "<td>"+e.user_name+"</td>";
 		  html += td + "</tr>";
 		  tbodyHtml += html;
@@ -266,143 +269,5 @@ $(function(){
     data: data4,
     options: options
   });
-
-
-
-  //Sparkline Charts
-  var labels = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-
-  var options = {
-    legend: {
-      display: false,
-    },
-    scales: {
-      xAxes: [{
-        display:false,
-      }],
-      yAxes: [{
-        display:false,
-      }]
-    },
-    elements: {
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3,
-      }
-    },
-  };
-
-  var data1 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: $.brandPrimary,
-        borderWidth: 2,
-        data: [35, 23, 56, 22, 97, 23, 64]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-1');
-  var sparklineChart1 = new Chart(ctx, {
-    type: 'line',
-    data: data1,
-    options: options
-  });
-
-  var data2 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: $.brandDanger,
-        borderWidth: 2,
-        data: [78, 81, 80, 45, 34, 12, 40]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-2');
-  var sparklineChart2 = new Chart(ctx, {
-    type: 'line',
-    data: data2,
-    options: options
-  });
-
-  var data3 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: $.brandWarning,
-        borderWidth: 2,
-        data: [35, 23, 56, 22, 97, 23, 64]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-3');
-  var sparklineChart3 = new Chart(ctx, {
-    type: 'line',
-    data: data3,
-    options: options
-  });
-
-  var data4 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: $.brandSuccess,
-        borderWidth: 2,
-        data: [78, 81, 80, 45, 34, 12, 40]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-4');
-  var sparklineChart4 = new Chart(ctx, {
-    type: 'line',
-    data: data4,
-    options: options
-  });
-
-  var data5 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: '#d1d4d7',
-        borderWidth: 2,
-        data: [35, 23, 56, 22, 97, 23, 64]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-5');
-  var sparklineChart5 = new Chart(ctx, {
-    type: 'line',
-    data: data5,
-    options: options
-  });
-
-  var data6 = {
-    labels: labels,
-    datasets: [
-      {
-        backgroundColor: 'transparent',
-        borderColor: $.brandInfo,
-        borderWidth: 2,
-        data: [78, 81, 80, 45, 34, 12, 40]
-      }
-    ]
-  };
-  var ctx = $('#sparkline-chart-6');
-  var sparklineChart6= new Chart(ctx, {
-    type: 'line',
-    data: data6,
-    options: options
-  });
   
-  
-  
-
 });

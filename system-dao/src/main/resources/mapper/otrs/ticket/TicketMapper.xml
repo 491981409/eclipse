@@ -411,9 +411,9 @@ SELECT
     t.escalation_solution_time as escalation_solution_time_unix,
     t.escalation_response_time as escalation_response_time_unix,
     UNIX_TIMESTAMP(now()) as system_time,
-    case when NOW() > FROM_UNIXTIME(t.escalation_response_time)
-               or NOW() > FROM_UNIXTIME(t.escalation_update_time)
-               or NOW() > FROM_UNIXTIME(t.escalation_solution_time) THEN 1 END as upgrade_count,
+    case when (NOW() > FROM_UNIXTIME(t.escalation_response_time) and t.escalation_response_time > 0  ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_update_time) and t.escalation_update_time > 0 ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_solution_time)  and  t.escalation_solution_time > 0)   THEN 1 END as upgrade_count,
     q.`name` as queue_name,
     tly.`name` as lock_name
 FROM
@@ -428,7 +428,8 @@ left join ticket_lock_type tly on tly.id = t.ticket_lock_id
 <where>
 	1=1 
 	<if test="condition.status =='pending' "><!-- 待处理 -->
-		and tst.`name` != 'closed'
+		and tst.`name` != 'closed' 
+		and tst.`name` != 'removed'
 	</if>
 	<if test="condition.userLogin !=null">
 		and u.login = #{condition.userLogin}
@@ -463,9 +464,9 @@ SELECT
 	u.id as user_id,
 	count(tst.`name`) as open_count,
 	tst.`name` as state_name,
-  COUNT(case when NOW() > FROM_UNIXTIME(t.escalation_response_time) 
-               or NOW() > FROM_UNIXTIME(t.escalation_update_time) 
-               or NOW() > FROM_UNIXTIME(t.escalation_solution_time) THEN 1 END) as upgrade_count
+  COUNT(case when (NOW() > FROM_UNIXTIME(t.escalation_response_time) and t.escalation_response_time > 0  ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_update_time) and t.escalation_update_time > 0 ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_solution_time)  and  t.escalation_solution_time > 0)   THEN 1 END) as upgrade_count
 FROM
 	ticket t
 LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
@@ -492,11 +493,52 @@ LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
 LEFT JOIN ticket_state_type tst ON ts.type_id = tst.id
 LEFT JOIN users u ON u.id = t.user_id
 WHERE
-	tst.`name` != 'closed'
+  tst.`name` != 'closed' and tst.`name` != 'removed'
   and DATE_FORMAT(t.create_time,'%Y-%m') = DATE_FORMAT(CURDATE(),'%Y-%m')
 group by
   DATE_FORMAT(t.create_time,'%Y-%m-%d'),
   t.queue_id
+</select>
+
+<!-- 查询一月每天创建的总数 -->
+<select id="findEveryDayCreateSum" resultType="Map">
+SELECT
+	DATE_FORMAT(t.create_time, '%Y-%m-%d') as day,
+	count(1) as day_count
+FROM
+	ticket t
+WHERE
+	t.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+GROUP BY
+	DATE_FORMAT(t.create_time, '%Y-%m-%d')
+</select>
+
+<!-- 查询前一月每天解决的工单数 -->
+<select id="findEveryDayCloseSum" resultType="Map">
+SELECT
+  DATE_FORMAT(h.create_time, '%Y-%m-%d') as day,
+	count(1) as day_count
+FROM
+	ticket_history h
+WHERE	h.`name` like '%closed successful%' and h.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+GROUP BY
+	DATE_FORMAT(h.create_time, '%Y-%m-%d')
+</select>
+
+<!-- 查询前一月每天升级的工单数 -->
+<select id="findEveryDayGradeSum" resultType="Map">
+select t.create_time day,count(1)  as day_count  FROM (
+SELECT
+  DISTINCT
+  DATE_FORMAT(h.create_time, '%Y-%m-%d') as create_time,
+  ticket_id
+FROM
+	ticket_history h,
+  ticket_history_type ht
+WHERE	h.history_type_id = ht.id and ht.`name` in ('EscalationSolutionTimeStop','EscalationUpdateTimeStop','EscalationResponseTimeStop') 
+and h.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+) t  GROUP BY
+t.create_time
 </select>
 
 </mapper>

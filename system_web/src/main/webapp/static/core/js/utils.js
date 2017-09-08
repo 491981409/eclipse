@@ -115,8 +115,10 @@ var utils = {
 		var day = new Date(date.getFullYear(),date.getMonth(),"0");
 		return day.getDate();
 	},websocket:function(fun){
-		
-		  var webSocket = new WebSocket("ws://localhost:6080/system-web/echo");
+		  var host = window.location.host;
+		  var root = window.location.pathname;
+		  var path = host+ root.substr( 0,root.substr(1).indexOf("/")+1);
+		  var webSocket = new WebSocket("ws://"+path+"/echo");
 		  webSocket.onerror = function(event) {
 		    onError(event)
 		  };

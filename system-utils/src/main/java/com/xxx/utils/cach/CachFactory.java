@@ -32,7 +32,7 @@ public class CachFactory {
      */  
     public Map<String,Object> createCache(String cachName){
     	Map	map;
-    	if(isExist(cachName)){
+    	if(!isExist(cachName)){
     	    map = new HashMap<String,Object>();  
             factoryMap.put(cachName, map);  
     	}else{
