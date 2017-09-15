@@ -1,0 +1,28 @@
+<script>
+    var requireJS = ["static/echarts/echarts.js","js/core/report_poll.js"];
+    loadJS(requireJS, "");
+</script>
+
+<div class="contextMenu" id="myMenu1" style="display: none;" >
+      <ul>
+        <li id="home">主页</li>
+      </ul>
+    </div>
+<!--/.row-->
+<div class="row" id="graph" style="margin-top:100px;">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-block">
+				<div class="chart-wrapper" id="poll">
+					<div id="main-chart-show">
+						<canvas id="main-chart" height="600px"></canvas>
+					</div>
+					<div id="canvas-bar-show" >
+						<div id="canvas-bar" style="height: 600px;"></div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

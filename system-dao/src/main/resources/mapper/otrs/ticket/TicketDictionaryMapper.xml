@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxx.otrs.mapper.ticket.TicketDictionaryMapper" >
+
+	<resultMap id="BaseResultMap" type="com.xxx.otrs.domain.ticket.TicketDictionary" >
+    <id column="id" property="dicId" jdbcType="BIGINT" />
+    <result column="name" property="dicName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+	<select id="getServiceDictionary" resultMap="BaseResultMap">
+		select s.id,s.`name` from service s where s.`name` not like '未定义%'
+	</select>
+	
+	<select id="getSlaDictionaryByServiceId" resultMap="BaseResultMap" parameterType="String">
+		select s.`name`,s.id from sla s LEFT JOIN service_sla a on s.id = a.sla_id 
+		<where>
+			1=1 
+			and a.service_id = #{serviceId,jdbcType=VARCHAR}
+		</where>
+	</select>
+	
+</mapper>
