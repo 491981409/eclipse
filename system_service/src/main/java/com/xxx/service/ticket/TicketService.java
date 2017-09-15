@@ -55,6 +55,24 @@ public class TicketService {
 		return pageInfo;
 	}
 	
+	
+	/**
+	 * 查询升级工单
+	 * @param param
+	 * @return
+	 */
+	public PageInfo<Map<String,Object>> queryTicketGride(Map<String,Object> param){
+		param.put("status","pending");
+		param.put("gride", "true");
+		PageHelper.startPage(param);
+		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
+		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);
+		return pageInfo;
+	}
+	
+	
+	
+	
 	/**
 	 * 获得每个队列 未分配状态总数
 	 * @return
@@ -178,6 +196,11 @@ public class TicketService {
 			}
 		}
 		return resultMap;
+	}
+	
+	
+	public Map<String,Object> getTicketDetail(String ticketId){
+		return ticketMapper.getTicketDetail(ticketId);
 	}
 	
 	

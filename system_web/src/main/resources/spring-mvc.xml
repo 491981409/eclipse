@@ -105,6 +105,9 @@
 	<!-- define / to /home -->
 	<mvc:view-controller path="/" view-name="redirect:/login"/>
 	
+	<!-- 支持上传文件 -->  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
+	
 	<bean class="com.xxx.utils.listener.ContextUtil" lazy-init="false" />  
 	
 </beans>

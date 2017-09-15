@@ -1,5 +1,7 @@
 $(function(){
   
+	$("#report").draggable();
+	
   utils.websocket(function(data){
 	  drawing(data);
   });
@@ -129,7 +131,7 @@ $(function(){
   };
   
   function initHtml(name,id,index,color){
-	  var html =" <div class=\"col-sm-6 col-lg-3\">" +
+	  var html =" <div class=\"col-sm-6 col-lg-6\">" +
       "<div class=\"social-box "+color+"\">"+
       "<i class=\"fa\">"+name+"</i>"+
       "<div class=\"chart-wrapper\">"+

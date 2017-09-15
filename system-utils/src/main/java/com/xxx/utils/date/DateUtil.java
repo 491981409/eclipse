@@ -215,7 +215,7 @@ public class DateUtil {
                     timestamps.add(dateTmp.getTime());  
                 }  
             }  
-            myDate = getAccurateDate(timestamps);  
+            myDate = getAccurateDate(timestamps);
         } else {  
             myDate = StringToDate(date, dateStyle.getValue());  
         }  

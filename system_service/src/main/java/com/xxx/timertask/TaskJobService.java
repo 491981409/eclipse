@@ -42,6 +42,7 @@ public class TaskJobService {
 		result.put("pendding", ticketService.getTicketPendding());
 		result.put("undistributed", ticketService.getTicketUndistributed());
 		result.put("ticketList", ticketJobService.queryTicketList());
+		result.put("ticketGrideList", ticketJobService.queryTicketGrideList());
 		result.put("bar", ticketService.countBar());
 		result.put("line", ticketService.countLine());
 		String json = new Gson().toJson(result);

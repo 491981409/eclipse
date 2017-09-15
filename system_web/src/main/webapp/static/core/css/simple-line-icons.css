@@ -776,3 +776,9 @@
 .icon-social-steam:before {
   content: "\e620";
 }
+
+
+.zmdi-plus:before {
+     content:'\f278';
+}
+

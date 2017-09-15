@@ -36,15 +36,11 @@
     </javaClientGenerator>
 
 
-<table tableName="dtwx_agent_cfg" domainObjectName="AgentCfg"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_agent" domainObjectName="Agent" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_account" domainObjectName="Account" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_app_config" domainObjectName="AppConfig" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_content" domainObjectName="Content" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+<table tableName="service" domainObjectName="Service" 
+		enableCountByExample="false"
+		enableUpdateByExample="false"
+		enableDeleteByExample="false"
+		enableSelectByExample="false" selectByExampleQueryId="false">
 </table>
 
 

@@ -56,6 +56,9 @@ public interface TicketMapper {
     int updateByPrimaryKey(Ticket record);
     
     
+    Map<String,Object> getTicketDetail(String ticketId);
+    
+    
     List<Ticket> query(Criteria criteria);
     
     

@@ -90,9 +90,7 @@ function loadCSS(cssFile, end, callback) {
 
       s.onload = callback;
       head.insertBefore(s, style);
-
     }
-
   } else if (callback) {
     callback();
   }

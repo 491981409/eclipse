@@ -30,6 +30,7 @@
 			<value>
 				/**/static/** = anon
 				/ticketOtrs/** = anon
+				/ticketDictionary/** = anon
 				/** = authc <!-- authc -->
 			</value>
 		</property>

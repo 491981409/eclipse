@@ -42,7 +42,10 @@ public class TicketOtrsService {
 		json.put("userLogin", userName);
 		json.put("ticketID", ticketId);
 		Result map = otrs.exeCallOtrs(type.getValue(), json.toString());
-		return new Gson().toJson(map).toString();
+		if(map.isSuccess()){
+			return map.getResult().toString();
+		}
+		return null;
 	}
 	
 }
