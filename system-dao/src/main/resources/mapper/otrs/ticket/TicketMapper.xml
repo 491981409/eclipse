@@ -432,19 +432,23 @@ left join ticket_lock_type tly on tly.id = t.ticket_lock_id) tick
 <where>
 	1=1 
 	<if test="condition.status =='pending' "><!-- 待处理 -->
-		and tick.`name` != 'closed' 
-		and tick.`name` != 'removed'
+		and tick.ticket_status != 'closed' 
+		and tick.ticket_status != 'removed'
 	</if>
 	<if test="condition.status =='open'">
-		and tick.`name` ='open'
+		and tick.ticket_status ='open'
 	</if>
-	<if test="condition.gride !=null">
+	<if test="condition.gride !=null and condition.gride =='true'">
 		and tick.upgrade_count = '1'
+	</if>
+	<if test="condition.gride !=null and condition.gride =='false'">
+		and tick.upgrade_count is null
 	</if>
 	<if test="condition.userLogin !=null">
 		and tick.login = #{condition.userLogin}
 	</if>
 </where>
+order by tick.create_time desc
 </select>
 
 <!-- 获得每个队列 未分配和处理中的数据 -->

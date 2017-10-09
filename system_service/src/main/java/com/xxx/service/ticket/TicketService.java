@@ -36,19 +36,26 @@ public class TicketService {
 		return ticketMapper.queryTicket(new Criteria(param));
 	}
 	
+	/**
+	 * 查询处理中的工单
+	 * @param param
+	 * @return
+	 */
 	public PageInfo<Map<String,Object>> getTicketList(Map<String,Object> param){
+		param.put("status","pending");
 		PageHelper.startPage(param);
 		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
 		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);
 		return pageInfo;
 	}
 	/**
-	 * 查询处理中状态的工单
+	 * 查询处理中未升级状态的工单
 	 * @param param
 	 * @return
 	 */
 	public PageInfo<Map<String,Object>> queryTicketProcess(Map<String,Object> param){
 		param.put("status","pending");
+		param.put("gride", "false");
 		PageHelper.startPage(param);
 		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
 		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);

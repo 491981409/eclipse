@@ -3324,7 +3324,8 @@ a.badge:focus, a.badge:hover {
   flex-direction: column;
   padding-left: 0;
   margin-bottom: 0;
-  color:red; }
+  color:black;
+}
 
 .list-group-item-action {
   width: 100%;
@@ -3343,7 +3344,7 @@ a.badge:focus, a.badge:hover {
   display: block;
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
-  background-color: #fff;
+ /** background-color: #fff;  zfx**/
   border: 1px solid rgba(0, 0, 0, 0.125);
  }
   .list-group-item:last-child {
@@ -9082,7 +9083,7 @@ a.tag:focus,a.tag:hover {
 
 
 #todo {
-    background: #FFC107;
+    background: #63c2de;
     color: #fff;
     font-family: satisfy,cursive
 }
@@ -9132,8 +9133,8 @@ a.tag:focus,a.tag:hover {
     height: 50px;
     border-radius: 50%;
     position: absolute;
-    background: #fff;
-    top: -25px;
+    background: #eceff1;
+    top: 25px;
     right: 23px;
     max-height: 300px;
 }
@@ -9238,7 +9239,7 @@ a.tag:focus,a.tag:hover {
 
 .checkbox .input-helper:before,.radio .input-helper:before {
     left: 0;
-    border: 2px solid #7a7a7a
+    border: 2px solid #eceff1
 }
 
 .checkbox.disabled,.radio.disabled {
@@ -9287,6 +9288,20 @@ a.tag:focus,a.tag:hover {
     color: #fff;
     font-weight: 700
 }
+.border-none{
+	border:none !important;
+}
+
+.border-none th,.border-none td{
+	border:none !important;
+}
+
+.row{
+	margin-right: 0px !important;
+}
+
+
+
 
 
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xxx.utils.RequestParamUtil;
 import com.xxx.utils.Result;
+import com.xxx.utils.ServiceException;
 
 @ControllerAdvice
 public abstract class BaseController {
@@ -38,6 +39,9 @@ public abstract class BaseController {
         }else if (ex instanceof MissingServletRequestParameterException){
         	model.setMsg("请求参数异常!");
             model.setCode("5002");
+        }else if(ex instanceof ServiceException){
+        	model.setMsg(ex.getMessage());
+        	model.setCode("50003");
         }else {
         	model.setMsg("系统异常!");
         	model.setCode("5000");

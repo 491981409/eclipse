@@ -1,6 +1,9 @@
 package com.xxx.model.ticket;
 
 public class TicketModel {
+	
+	
+	
 
 	private String uploadImgFormId;
 	private String msgId;

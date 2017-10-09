@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- For assistance related to logback-translator or configuration  -->
+<!-- For assistance related to logback-translator or configuration -->
 <!-- files in general, please contact the logback user mailing list -->
-<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
-<!--                                                                -->
-<!-- For professional support please see                            -->
-<!--    http://www.qos.ch/shop/products/professionalSupport         -->
-<!--                                                                -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user -->
+<!-- -->
+<!-- For professional support please see -->
+<!-- http://www.qos.ch/shop/products/professionalSupport -->
+<!-- -->
 <configuration>
-  <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
-    <Target>System.out</Target>
-    <encoder>
-      <pattern>[%p][%d{yyyy-MM-dd HH:mm:ss,SSS}][%c]%m%n</pattern>
-    </encoder>
-  </appender>
-  <root level="debug">
-    <appender-ref ref="Console"/>
-  </root>
+
+	<contextName>system-web</contextName><!-- 区分不同应用程序的记录，默认为default -->
+	
+	<property name="logName" value="system"/> 
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<Target>System.out</Target>
+		<encoder>
+			<pattern>[%p][%d{yyyy-MM-dd HH:mm:ss,SSS}][%c]%m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="rollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.home}/logs/${logName}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${user.home}/logs/${logName}.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+    <logger name="com.xxx" value="debug" />
+    
+	<root level="info">
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile"/>
+	</root>
 </configuration>

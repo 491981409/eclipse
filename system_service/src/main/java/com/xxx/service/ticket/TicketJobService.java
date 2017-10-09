@@ -18,12 +18,16 @@ public class TicketJobService {
 	
 	public static volatile int pageNumGride = 1;
 	
+	public static volatile int pageNumMax = 1;
+	
+	public static volatile int totalMax = 10;
+	
 	public static volatile int total = 5;
 	
 	public static volatile int records;
 	
 	
-	public PageInfo<Map<String,Object>> queryTicketList(){
+	public PageInfo<Map<String,Object>> queryTicketProcessList(){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("pageNum",pageNum++);
 		map.put("pageSize",total);
@@ -42,6 +46,18 @@ public class TicketJobService {
 		PageInfo<Map<String,Object>> page = ticketService.queryTicketGride(map);
 		if(pageNumGride > page.getPages()){
 			pageNumGride = 1;
+		}
+		return page;
+	}
+	
+	
+	public PageInfo<Map<String,Object>> queryTicketList(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("pageNum",pageNumMax++);
+		map.put("pageSize",totalMax);
+		PageInfo<Map<String,Object>> page = ticketService.getTicketList(map);
+		if(pageNumMax > page.getPages()){
+			pageNumMax = 1;
 		}
 		return page;
 	}

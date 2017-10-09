@@ -25,14 +25,14 @@
 
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <header class="app-header navbar" id="header">
+    <header class="app-header navbar" id="header" style="display: none;">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">&#9776;</button>
         <a class="navbar-brand" href="#"></a>
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" href="#" >&#9776;</a>
             </li>
-           <!--  <li class="nav-item px-3">
+            <li class="nav-item px-3">
                 <a class="nav-link" href="#">Dashboard</a>
             </li>
             <li class="nav-item px-3">
@@ -40,7 +40,7 @@
             </li>
             <li class="nav-item px-3">
                 <a class="nav-link" href="#">Settings</a>
-            </li> -->
+            </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
@@ -68,8 +68,8 @@
             <li class="nav-item d-md-down-none">
             </li>
         </ul>
-    </header>
-    <div class="app-body">
+    </header> 
+    <div class="app-body" style="margin-top:0px">
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
@@ -94,7 +94,10 @@
                         <a class="nav-link" href="views/core/report"><i class="icon-calculator"></i> 报表 </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="views/core/report_screen"><i class="icon-calculator"></i> 报表分屏 <span class="badge badge-info">NEW</span></a>
+                        <a class="nav-link" href="views/core/report_screen"><i class="icon-calculator"></i> 报表分屏</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="views/report/report_canvas"><i class="icon-calculator"></i> 动图报表 <span class="badge badge-info">NEW</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="views/core/report_chart"><i class="icon-calculator"></i>报表chart </a>
@@ -136,59 +139,40 @@
 
         <!-- Main content -->
         <main class="main">
-            <div class="container-fluid">
+            <div class="container-fluid" style="margin:0px;padding:0px;">
                 <div id="ui-view"></div>
             </div>
         </main>
     </div>
 
-    <footer class="app-footer">
+    <footer class="app-footer" style="display: none;">
         <a href="http://coreui.io">hfy</a> &copy; 2017 creativeLabs.
         <span class="float-right">Powered by <a href="http://coreui.io">hfy</a>
         </span>
     </footer>
-
-    <script src="static/js/jquery-1.11.0.min.js"></script>
-    <script src="static/js/jquery-ui.min.js"></script>
-    <script src="static/js/jquery.contextmenu.r2.js"></script>
-    <script src="static/core/js/tether.min.js"></script>
-    <script src="static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="static/core/js/pace.min.js"></script>
-	 <!-- Plugins and scripts required by all views -->
-    <script src="static/charts/Chart.js"></script>
-    <script src="static/charts/Chart.bundle.js"></script>
-    <script src="static/core/js/app.js"></script>
-    <script src="static/core/js/utils.js"></script>
     
+ <!--   <script src="static/js/require.js" data-main="static/js/main"></script> -->
+    <script src="static/js/libs/jquery-1.11.0.min.js"></script>
+    <script src="static/js/libs/jquery-ui.min.js"></script>
+    <script src="static/js/libs/jquery.contextmenu.r2.js"></script>
+    <script src="static/js/libs/tether.min.js"></script>
+    <script src="static/js/libs/pace.min.js"></script>
+    <script src="static/js/libs/bootstrap.min.js"></script>
+    <script src="static/js/libs/echarts/echarts.min.js"></script>
+    <script src="static/js/utils.js"></script>
+    <script src="static/js/app.js"></script>
     
-     <script type="text/javascript">
-     	$(function(){
-     		$("#logout").click(function(){
-     			$.ajax({
-     				url:"login/loginout",
-     				type:"post",
-     				success:function(data){
-     					window.location.href = "login";
-     				}
-     			});
-     		});
-     		
-     		$("html").keyup(function(data){
-     			if(data.keyCode == 72){
-     				var flag = $("#header").is(":hidden");
-     				$(".navbar-toggler").trigger("click");
-     				if(flag){
-     					$("#header").show();
-     				}else{
-     					$("#header").hide();
-     				}
-     			}
-     		});
-     		
-     		
-     		
-     	});
-     </script>
+    <script type="text/javascript">
+	      $("#logout").click(function(){
+			$.ajax({
+				url:"login/loginout",
+				type:"post",
+				success:function(data){
+					window.location.href = "login";
+				}
+			});
+		});
+    </script>
 </body>
 
 </html>

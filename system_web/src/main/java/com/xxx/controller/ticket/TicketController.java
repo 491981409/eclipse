@@ -40,7 +40,6 @@ public class TicketController {
 		return result;
 	}
 	
-	
 	@RequestMapping("/ticketGride")
 	@ResponseBody
 	public Result ticketGride(){
@@ -48,6 +47,19 @@ public class TicketController {
 		map.put("pageNum",TicketJobService.pageNumGride);
 		map.put("pageSize",TicketJobService.total);
 		PageInfo<Map<String,Object>> page = ticketService.queryTicketGride(map);
+		Result result =  new Result();
+		result.setResult(page);
+		return result;
+	}
+	
+	
+	@RequestMapping("/ticketList")
+	@ResponseBody
+	public Result ticketList(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("pageNum",TicketJobService.pageNumMax);
+		map.put("pageSize",TicketJobService.totalMax);
+		PageInfo<Map<String,Object>> page = ticketService.getTicketList(map);
 		Result result =  new Result();
 		result.setResult(page);
 		return result;

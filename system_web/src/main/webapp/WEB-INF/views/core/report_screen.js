@@ -20,7 +20,7 @@ $(function(){
 	 $('#ticketGride').contextMenu('myMenu1', {
 	      bindings: {
 	        'max': function(t) {
-	          loadPage("views/core/report_poll");
+	          loadPage("views/ticket/ticket_list");
 	        }
 	      }
 	  });
@@ -83,7 +83,7 @@ $(function(){
 	  $.each(data['pendding'],function(i,e){
 		  $("#"+ getEleId(e.queue_name) +"P").html(e.amount);
 	  });
-	  jointTable(data['ticketList'].list,$("#reportTicketTable"));
+	  jointTable(data['ticketProcessList'].list,$("#reportTicketTable"));
 	  jointTable(data['ticketGrideList'].list,$("#reportTicketGrideTable"));
   }
   
@@ -96,6 +96,7 @@ $(function(){
 		  jointTable(res.result.list,$("#reportTicketTable"));
 	  }
   });
+  
   $.ajax({
 	  url:"ticket/ticketGride",
 	  dataType:"json",
@@ -104,7 +105,6 @@ $(function(){
 		  jointTable(res.result.list,$("#reportTicketGrideTable"));
 	  }
   });
-  
   
   
   function jointTable(data,$table){
@@ -194,9 +194,23 @@ $(function(){
 		$this.closest(".t-add").removeClass("toggled"),
         $this.closest(".t-add").find("textarea").val("");
 		break;
+	case 'week_delete':
+		$(this).closest(".list-group-item").remove();
+		break;
 	default:
 		break;
 	}
+  });
+  
+  
+  ///添加重点工作
+  
+  var $html = $(document.getElementById('html_template').innerHTML);
+  
+  $("#weekSubmit").on("click",function(){
+	  var value = $("#week_text").val();
+	  $html.find("span").html(value);
+	  $("#weekContent").prepend($html.html());
   });
   
 });

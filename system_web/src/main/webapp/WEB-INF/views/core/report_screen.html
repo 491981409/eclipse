@@ -34,158 +34,51 @@
 		<div class="col-lg-6">
 			<div class="row" id="weekWork">
 				<div class="col-md-12">
-						<div id="todo" class="card card-light" >
+					<script type="text/template" id="html_template">
+										<div>
+										<div class="list-group-item media border-none">
+                                            <div class="pull-right">
+                                                <ul class="actions actions-alt">
+                                                    <li class="dropdown">
+                                                        <a href="" data-toggle="dropdown">
+                                                            <i class="fa fa-ellipsis-v"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+								                            <a class="dropdown-item" href="#" data-ma-action="week_delete">删除</a>
+								                            <a class="dropdown-item" href="#">修改</a>
+								                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="media-body" style="margin-right:50px;">
+                                                <div class="checkbox checkbox-light">
+                                                    <label>
+                                                        <input type="checkbox" style="opacity:0">
+                                                        <i class="input-helper"></i>
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+</div>
+</script>
+
+					<div id="todo" class="card card-light" >
                                 <div class="card-header ch-alt">
                                     <h2>本周重点工作</h2>
-                                </div>
-                                <div class="card-body card-padding">
                                     <div class="t-add" >
                                         <i class="ta-btn fa fa-plus" data-ma-action="todo-form-open"></i>
                                         <div class="ta-block">
-                                            <textarea placeholder="What you want to do..."></textarea>
+                                            <textarea placeholder="请输入..." id="week_text"></textarea>
                                             <div class="tab-actions">
                                                 <a data-ma-action="todo-form-close" style="color:#F44336;"><i class=" fa fa-close"></i></a>
-                                                <a data-ma-action="todo-form-close" href="" class="c-green"><i class=" fa fa-check"></i></a>
+                                                <a data-ma-action="todo-form-close" href="" class="c-green" id="weekSubmit"><i class=" fa fa-check"></i></a>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="list-group">
-                                        <div class="list-group-item media">
-                                            <div class="pull-right">
-                                                <ul class="actions actions-alt">
-                                                    <li class="dropdown">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="fa fa-ellipsis-v "></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="">Delete</a></li>
-                                                            <li><a href="">Archive</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="checkbox checkbox-light">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <i class="input-helper"></i>
-                                                        <span>
-                                                            Duis vitae nibh molestie pharetra augue vitae
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="list-group-item media">
-                                            <div class="pull-right">
-                                                <ul class="actions actions-alt">
-                                                    <li class="dropdown">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="zmdi zmdi-more-vert"></i>
-                                                        </a>
-
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="">Delete</a></li>
-                                                            <li><a href="">Archive</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="checkbox checkbox-light">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <i class="input-helper"></i>
-                                                        <span>
-                                                            Duis vitae nibh molestie pharetra augue vitae
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         <div class="list-group-item media">
-                                            <div class="pull-right">
-                                                <ul class="actions actions-alt">
-                                                    <li class="dropdown">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="zmdi zmdi-more-vert"></i>
-                                                        </a>
-
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="">Delete</a></li>
-                                                            <li><a href="">Archive</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="checkbox checkbox-light">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <i class="input-helper"></i>
-                                                        <span>
-                                                            Duis vitae nibh molestie pharetra augue vitae
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         <div class="list-group-item media">
-                                            <div class="pull-right">
-                                                <ul class="actions actions-alt">
-                                                    <li class="dropdown">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="zmdi zmdi-more-vert"></i>
-                                                        </a>
-
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="">Delete</a></li>
-                                                            <li><a href="">Archive</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="checkbox checkbox-light">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <i class="input-helper"></i>
-                                                        <span>
-                                                            Duis vitae nibh molestie pharetra augue vitae
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         <div class="list-group-item media">
-                                            <div class="pull-right">
-                                                <ul class="actions actions-alt">
-                                                    <li class="dropdown">
-                                                        <a href="" data-toggle="dropdown">
-                                                            <i class="zmdi zmdi-more-vert"></i>
-                                                        </a>
-
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li><a href="">Delete</a></li>
-                                                            <li><a href="">Archive</a></li>
-                                                        </ul>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="checkbox checkbox-light">
-                                                    <label>
-                                                        <input type="checkbox">
-                                                        <i class="input-helper"></i>
-                                                        <span>
-                                                            Duis vitae nibh molestie pharetra augue vitae
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="card-body card-padding" style="background-color:white;overflow: hidden;height: 285px;">
+                                    <div class="list-group" id="weekContent">
                                     </div>
                               
 						</div>
