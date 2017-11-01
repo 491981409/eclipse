@@ -1,21 +1,19 @@
-//package com.xxx.test;
-//
-//import org.junit.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//
-//import com.google.gson.Gson;
-//import com.xxx.service.ticket.TicketService;
-//import com.xxx.utils.test.BaseJunit4Test;
-//
-//public class TicketServiceTest extends BaseJunit4Test {
-//	
-//	@Autowired
-//	private TicketService ticketService;
-//	
-//	@Test
-//	public void demo1(){
-//		
-//		System.out.println(new Gson().toJson(ticketService.queueDayTicketCount()));
-//	}
-//
-//}
+package com.xxx.test;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+@RunWith(SpringJUnit4ClassRunner.class)  //使用junit4进行测试  
+@ContextConfiguration({"classpath:spring-mvc.xml","classpath:spring-*.xml"}) //加载配置文件  
+public class TicketServiceTest  {
+	
+	
+	@Test
+	public void demo1(){
+		
+		//System.out.println(new Gson().toJson(ticketService.queueDayTicketCount()));
+	}
+
+}

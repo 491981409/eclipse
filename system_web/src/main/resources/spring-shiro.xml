@@ -31,7 +31,9 @@
 				/**/static/** = anon
 				/ticketOtrs/** = anon
 				/ticketDictionary/** = anon
-				/** = authc <!-- authc -->
+				/views/report/** = anon
+				/js/report/** = anon
+				/** = anon <!-- authc -->
 			</value>
 		</property>
 	</bean>

@@ -22,7 +22,7 @@ public class TicketJobService {
 	
 	public static volatile int totalMax = 10;
 	
-	public static volatile int total = 5;
+	public static volatile int total = 12;
 	
 	public static volatile int records;
 	

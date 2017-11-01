@@ -10,9 +10,9 @@
   <context id="DB2Tables" targetRuntime="MyBatis3">
  
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-        connectionURL="jdbc:mysql://192.168.20.134:3306/wxi"
+        connectionURL="jdbc:mysql://172.18.3.202:3306/wxi"
         userId="root"
-        password="123456">
+        password="password">
     </jdbcConnection>
 
 
@@ -36,15 +36,11 @@
     </javaClientGenerator>
 
 
-<table tableName="dtwx_agent_cfg" domainObjectName="AgentCfg"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_agent" domainObjectName="Agent" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_account" domainObjectName="Account" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_app_config" domainObjectName="AppConfig" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-</table>
-<table tableName="dtwx_content" domainObjectName="Content" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+<table tableName="remark" domainObjectName="Remark" 
+		enableCountByExample="false"
+		enableUpdateByExample="false"
+		enableDeleteByExample="false"
+		enableSelectByExample="false" selectByExampleQueryId="false">
 </table>
 
 

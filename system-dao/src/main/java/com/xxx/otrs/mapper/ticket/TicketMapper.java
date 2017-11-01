@@ -116,6 +116,21 @@ public interface TicketMapper {
     List<Map<String,Object>> findEveryDayGradeSum();
     
     
+    /**
+     * 获取当前
+     * @return
+     */
+    int findCurrentMonthCreateSum();
+    
+    
+    int findCurrentMonthProcessSum(Criteria criteria);
+    
+    
+    /**
+     * 统计当前月处于升级状态的数据
+     * @return
+     */
+    int countCurrentMonthGradeTicket();
     
     
 }

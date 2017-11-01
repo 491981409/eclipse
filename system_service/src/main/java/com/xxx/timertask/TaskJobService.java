@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import com.xxx.service.ticket.TicketJobService;
 import com.xxx.service.ticket.TicketService;
+import com.xxx.service.wxi.RemarkService;
 import com.xxx.socket.EndPointServer;
 
 @Service
@@ -23,6 +24,9 @@ public class TaskJobService {
 	
 	@Autowired
 	private TicketJobService ticketJobService;
+	
+	@Autowired
+	private RemarkService remarkService;
 	
 	
 	
@@ -46,8 +50,13 @@ public class TaskJobService {
 		result.put("pendding", ticketService.getTicketPendding());
 		result.put("undistributed", ticketService.getTicketUndistributed());
 		result.put("ticketProcessList", ticketJobService.queryTicketProcessList());
-		result.put("ticketGrideList", ticketJobService.queryTicketGrideList());
-		result.put("ticketList", ticketJobService.queryTicketList());
+		result.put("monthCount", ticketService.getCurrentMonthCreateSun());
+		result.put("openCount", ticketService.getCurrentMonthOpenSum());
+		result.put("closedCount", ticketService.getCurrentMonthClosedSum());
+		result.put("gradeCount", ticketService.getCurrentMonthGradeTicketCount());
+		result.put("remark", remarkService.query());
+		//result.put("ticketGrideList", ticketJobService.queryTicketGrideList());
+		//result.put("ticketList", ticketJobService.queryTicketList());
 		result.put("bar", ticketService.countBar());
 		result.put("line", ticketService.countLine());
 		String json = new Gson().toJson(result);

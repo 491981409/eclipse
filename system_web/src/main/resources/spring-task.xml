@@ -11,9 +11,9 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/task/spring-task-3.0.xsd"
 	default-lazy-init="true">
 	
-<task:scheduled-tasks>
-	<task:scheduled ref="taskJobService" method="amountJob" cron="0 * * * * ?"/>   
-</task:scheduled-tasks>	
+ <task:scheduled-tasks>
+	<task:scheduled ref="taskJobService" method="amountJob" cron="0/30 * * * * ?"/>   
+</task:scheduled-tasks>
 	
 	
 </beans>

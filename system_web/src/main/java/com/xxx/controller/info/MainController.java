@@ -16,13 +16,10 @@ import com.xxx.utils.RequestParamUtil;
 @RequestMapping("/main")
 public class MainController {
 	
-	@Autowired
-	private TicketService ticketService;
 	
 	@SuppressWarnings("unused")
 	@RequestMapping("/toMain")
 	public String toMain(HttpServletRequest request){
-		List<Ticket> ticketList = ticketService.query(RequestParamUtil.paramMapPage(request));
 		return "core/main";
 	}
 	

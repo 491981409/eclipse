@@ -1,0 +1,56 @@
+<script type="text/javascript">
+	var requireJS = [""];
+	loadJS(requireJS, "js/report/remark_edit.js");
+</script>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>本周重点工作
+          <div style="    position: absolute;
+    right: 10px;
+    top: 10px;">
+          	<i class="icon-plus icons   mt-3" data-toggle="modal" data-target="#myModal">新增</i>
+          	<i class="icon-close icons   mt-3">删除</i>
+          </div>
+          
+        </div>
+        <div class="card-body">
+          <table class="table" id="table">
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+
+   
+  </div>
+ </div>
+ 
+ <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	开始演示模态框
+</button>
+ 
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Modal title</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

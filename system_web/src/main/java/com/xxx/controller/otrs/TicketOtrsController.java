@@ -54,11 +54,11 @@ public class TicketOtrsController extends BaseController {
 	public Object ticketDetail(HttpServletRequest request) throws Exception{
 		String ticketId = request.getParameter("ticketId");
 		String userLogin = "13316532095";//request.getParameter("userLogin");
-		String ticketJson = ticketOtrsService.getTicketFactory(userLogin, "1458",OtrsMethodEnum.ticket);
+		String ticketJson = ticketOtrsService.getTicketFactory(userLogin, ticketId,OtrsMethodEnum.ticket);
 		JSONParser parser=new JSONParser();
 		JSONObject jsonobj= (JSONObject) parser.parse(ticketJson);
 		//String linkJson = ticketOtrsService.getTicketFactory(userLogin, ticketId,OtrsMethodEnum.link);
-//		String hisotryJson = ticketOtrsService.getTicketFactory(userLogin,ticketId,OtrsMethodEnum.history);
+		String hisotryJson = ticketOtrsService.getTicketFactory(userLogin,ticketId,OtrsMethodEnum.history);
 		Map<String,Object> json = new HashMap<>();
 		//((JSONObject)parser.parse(jsonobj.get("ticketInfo").toString())).get("description").toString().replaceAll("\"/otrs(.*?)/weixin.pl", "\"" + "AAAA");
 		json.put("ticket", ticketJson.replaceAll("\"/otrs(.*?)/weixin.pl", "\"" +CallOtrs.OTRS_URL));

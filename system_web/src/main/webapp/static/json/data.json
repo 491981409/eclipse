@@ -1,5 +1,4 @@
-{
-   "rows":[
+[
       {
          "CategoryName":"Beverages",
          "ProductName":"Steeleye Stout",
@@ -918,4 +917,3 @@
          "Quantity":"44"
       }
    ]
-}

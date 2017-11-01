@@ -14,33 +14,24 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js">
-    <link rel="shortcut icon" href="static/core/img/favicon.png">
     <title>报表</title>
     <!-- Icons -->
     <link href="static/core/css/font-awesome.min.css" rel="stylesheet">
     <link href="static/core/css/simple-line-icons.css" rel="stylesheet">
-    <!-- Main styles for this application -->
     <link href="static/core/css/style.css" rel="stylesheet">
 </head>
 
-
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-    <header class="app-header navbar" id="header" style="display: none;">
+    <header class="app-header navbar" id="header">
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">&#9776;</button>
         <a class="navbar-brand" href="#"></a>
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item">
                 <a class="nav-link navbar-toggler sidebar-toggler" href="#" >&#9776;</a>
             </li>
-            <li class="nav-item px-3">
+          <!--   <li class="nav-item px-3">
                 <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Users</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Settings</a>
-            </li>
+            </li> -->
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item d-md-down-none">
@@ -69,7 +60,7 @@
             </li>
         </ul>
     </header> 
-    <div class="app-body" style="margin-top:0px">
+    <div class="app-body">
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
@@ -86,30 +77,15 @@
                                 <a class="nav-link" href="views/core/buttons"><i class="icon-puzzle"></i>按钮</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="views/core/report_echarts"><i class="icon-puzzle"></i>echarts</a>
+                                <a class="nav-link" href="views/core/simple-line-icons"><i class="icon-puzzle"></i>icons</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="views/core/modals"><i class="icon-puzzle"></i>modals</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="views/core/report"><i class="icon-calculator"></i> 报表 </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/core/report_screen"><i class="icon-calculator"></i> 报表分屏</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/report/report_canvas"><i class="icon-calculator"></i> 动图报表 <span class="badge badge-info">NEW</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/core/report_chart"><i class="icon-calculator"></i>报表chart </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/core/report_bar"><i class="icon-calculator"></i>柱形图</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/core/widgets"><i class="icon-calculator"></i> 小工具 </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="views/core/charts"><i class="icon-pie-chart"></i> 图像</a>
+                        <a class="nav-link" href="views/report/remark_edit"><i class="icon-pie-chart"></i>配置重点工作</a>
                     </li>
                     <li class="divider"></li>
                     <li class="nav-title">
@@ -138,41 +114,20 @@
         </div>
 
         <!-- Main content -->
-        <main class="main">
-            <div class="container-fluid" style="margin:0px;padding:0px;">
-                <div id="ui-view"></div>
+        <main class="main" style="background-color: white;">
+            <div class="container-fluid">
+                <div id="ui-view" style="padding-top: 20px;"></div>
             </div>
         </main>
     </div>
-
+    
     <footer class="app-footer" style="display: none;">
         <a href="http://coreui.io">hfy</a> &copy; 2017 creativeLabs.
         <span class="float-right">Powered by <a href="http://coreui.io">hfy</a>
         </span>
     </footer>
     
- <!--   <script src="static/js/require.js" data-main="static/js/main"></script> -->
-    <script src="static/js/libs/jquery-1.11.0.min.js"></script>
-    <script src="static/js/libs/jquery-ui.min.js"></script>
-    <script src="static/js/libs/jquery.contextmenu.r2.js"></script>
-    <script src="static/js/libs/tether.min.js"></script>
-    <script src="static/js/libs/pace.min.js"></script>
-    <script src="static/js/libs/bootstrap.min.js"></script>
-    <script src="static/js/libs/echarts/echarts.min.js"></script>
-    <script src="static/js/utils.js"></script>
-    <script src="static/js/app.js"></script>
-    
-    <script type="text/javascript">
-	      $("#logout").click(function(){
-			$.ajax({
-				url:"login/loginout",
-				type:"post",
-				success:function(data){
-					window.location.href = "login";
-				}
-			});
-		});
-    </script>
+    <script src="static/js/lib/require.js" data-main="static/js/app"></script>
 </body>
 
 </html>

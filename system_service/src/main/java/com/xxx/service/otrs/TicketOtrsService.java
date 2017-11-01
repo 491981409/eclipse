@@ -78,7 +78,7 @@ public class TicketOtrsService {
 		}
 		Map<String,String> param = new HashMap<>();
 		param.put("userLogin",ticket.getCreateUser());
-		 param.put("customerUserLogin","18033073739");
+		// param.put("customerUserLogin","18033073739");
 		 param.put("action", "AgentCreateTicket");
 		 param.put("appName", "TICKET");
 		 param.put("Priority", "3");//微信创建默认级别

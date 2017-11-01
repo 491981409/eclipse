@@ -35,14 +35,13 @@ public class TicketService {
 	public List<Map<String,Object>> queryTicket(Map<String,Object> param){
 		return ticketMapper.queryTicket(new Criteria(param));
 	}
-	
+
 	/**
 	 * 查询处理中的工单
 	 * @param param
 	 * @return
 	 */
 	public PageInfo<Map<String,Object>> getTicketList(Map<String,Object> param){
-		param.put("status","pending");
 		PageHelper.startPage(param);
 		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
 		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);
@@ -54,8 +53,7 @@ public class TicketService {
 	 * @return
 	 */
 	public PageInfo<Map<String,Object>> queryTicketProcess(Map<String,Object> param){
-		param.put("status","pending");
-		param.put("gride", "false");
+		param.put("status","open");
 		PageHelper.startPage(param);
 		List<Map<String,Object>> ticketList = ticketMapper.queryTicket(new Criteria(param));
 		PageInfo<Map<String,Object>> pageInfo =new PageInfo<Map<String,Object>>(ticketList);
@@ -142,13 +140,13 @@ public class TicketService {
 		
 		Map<String,String> grade = convert(ticketMapper.findEveryDayGradeSum());
 		
-		String [] closeList = new String[28];
-		String [] createList = new String[28];
-		String [] gradeList = new String[28];
-		String [] lable = new String[28];
+		String [] closeList = new String[7];
+		String [] createList = new String[7];
+		String [] gradeList = new String[7];
+		String [] lable = new String[7];
 		Date date = new Date();
-		int index = 27;
-		for (int i= 0 ;i > -28 ;i--) {
+		int index = 6;
+		for (int i= 0 ;i > -7 ;i--) {
 			String day = DateUtil.DateToString(DateUtil.addDay(date, i), DateStyle.YYYY_MM_DD);
 			lable[index] = DateUtil.DateToString(DateUtil.addDay(date, i), DateStyle.MM_DD);
 			convertArray(closeList,close,day,index);
@@ -208,6 +206,26 @@ public class TicketService {
 	
 	public Map<String,Object> getTicketDetail(String ticketId){
 		return ticketMapper.getTicketDetail(ticketId);
+	}
+	
+	public int getCurrentMonthCreateSun(){
+		return ticketMapper.findCurrentMonthCreateSum();
+	}
+	
+	public int getCurrentMonthOpenSum(){
+		Criteria criteria = new Criteria();
+		criteria.put("status", "open");
+		return ticketMapper.findCurrentMonthProcessSum(criteria);
+	}
+	
+	public int getCurrentMonthClosedSum(){
+		Criteria criteria = new Criteria();
+		criteria.put("status", "closed");
+		return ticketMapper.findCurrentMonthProcessSum(criteria);
+	}
+	
+	public int getCurrentMonthGradeTicketCount(){
+		return ticketMapper.countCurrentMonthGradeTicket();
 	}
 	
 	

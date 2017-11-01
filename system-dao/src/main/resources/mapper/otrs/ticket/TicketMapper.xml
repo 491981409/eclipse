@@ -419,7 +419,8 @@ SELECT
                or (NOW() > FROM_UNIXTIME(t.escalation_solution_time)  and  t.escalation_solution_time > 0)   THEN 1 END as upgrade_count,
     q.`name` as queue_name,
     tly.`name` as lock_name,
-    u.login
+    u.login,
+	cu.login customer_login
 FROM
 	ticket t
 LEFT JOIN queue q ON t.queue_id = q.id
@@ -445,7 +446,7 @@ left join ticket_lock_type tly on tly.id = t.ticket_lock_id) tick
 		and tick.upgrade_count is null
 	</if>
 	<if test="condition.userLogin !=null">
-		and tick.login = #{condition.userLogin}
+		and (tick.login = #{condition.userLogin}  or tick.customer_login = #{condition.userLogin})
 	</if>
 </where>
 order by tick.create_time desc
@@ -493,6 +494,21 @@ GROUP BY
 	tst.`name`
 </select>
 
+<select id="countCurrentMonthGradeTicket" resultType="Integer">
+SELECT
+  count(case when (NOW() > FROM_UNIXTIME(t.escalation_response_time) and t.escalation_response_time > 0  ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_update_time) and t.escalation_update_time > 0 ) 
+               or (NOW() > FROM_UNIXTIME(t.escalation_solution_time)  and  t.escalation_solution_time > 0)  THEN 1 END) as upgrade_count
+FROM
+	ticket t
+LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
+LEFT JOIN ticket_state_type tst ON ts.type_id = tst.id
+where DATE_FORMAT(t.create_time, '%Y-%m') = DATE_FORMAT(now(), '%Y-%m')
+</select>
+
+
+
+
 <!-- 统计当月的未关闭的工单 -->
 <select id="currentMonthTicket" resultType="Map">
 	SELECT
@@ -514,6 +530,49 @@ group by
   t.queue_id
 </select>
 
+<!-- 查询当前月创建工单的总数 -->
+<select id="findCurrentMonthCreateSum" resultType="Integer">
+SELECT
+	count(1) as day_count
+FROM
+	ticket t
+WHERE
+	DATE_FORMAT(t.create_time, '%Y-%m') = DATE_FORMAT(now(), '%Y-%m')
+</select>
+
+<!-- 查询当前月创建工单的总数 -->
+<select id="findCurrentMonthProcessSum" resultType="Integer">
+select count(1) as process_count
+FROM
+	ticket t
+LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
+LEFT JOIN ticket_state_type tst ON ts.type_id = tst.id
+LEFT JOIN users u ON u.id = t.user_id
+<where>
+	1=1 
+	<if test="condition.status != null and condition.status =='open'">
+		and tst.`name` = 'open'
+	</if>
+	<if test="condition.status != null and condition.status =='closed'">
+		and tst.`name` = 'closed'
+	</if>
+	and DATE_FORMAT(t.create_time, '%Y-%m') = DATE_FORMAT(now(), '%Y-%m')
+</where>
+
+</select>
+
+<select id="findCurrentMonthCloseSum" resultType="Integer">
+select count(1) as process_count
+FROM
+	ticket t
+LEFT JOIN ticket_state ts ON t.ticket_state_id = ts.id
+LEFT JOIN ticket_state_type tst ON ts.type_id = tst.id
+LEFT JOIN users u ON u.id = t.user_id
+WHERE
+	tst.`name` = 'open' and DATE_FORMAT(t.create_time, '%Y-%m') = DATE_FORMAT(now(), '%Y-%m')
+</select>
+
+
 <!-- 查询一月每天创建的总数 -->
 <select id="findEveryDayCreateSum" resultType="Map">
 SELECT
@@ -522,7 +581,7 @@ SELECT
 FROM
 	ticket t
 WHERE
-	t.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+	t.create_time > date_sub(curdate(), INTERVAL 7 DAY)
 GROUP BY
 	DATE_FORMAT(t.create_time, '%Y-%m-%d')
 </select>
@@ -534,7 +593,7 @@ SELECT
 	count(1) as day_count
 FROM
 	ticket_history h
-WHERE	h.`name` like '%closed successful%' and h.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+WHERE	h.`name` like '%closed successful%' and h.create_time > date_sub(curdate(), INTERVAL 7 DAY)
 GROUP BY
 	DATE_FORMAT(h.create_time, '%Y-%m-%d')
 </select>
@@ -550,7 +609,7 @@ FROM
 	ticket_history h,
   ticket_history_type ht
 WHERE	h.history_type_id = ht.id and ht.`name` in ('EscalationSolutionTimeStop','EscalationUpdateTimeStop','EscalationResponseTimeStop') 
-and h.create_time > date_sub(curdate(), INTERVAL 28 DAY)
+and h.create_time > date_sub(curdate(), INTERVAL 7 DAY)
 ) t  GROUP BY
 t.create_time
 </select>
